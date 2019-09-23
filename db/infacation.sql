@@ -23,7 +23,17 @@ CREATE TABLE IF NOT EXISTS `machine` (
 CREATE TABLE IF NOT EXISTS `keyboard` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
   `hit` varchar(255) NOT NULL COMMENT '敲击记录',
-  `user` int(10)  not null COMMENT '关联用户' ,
-  constraint user_id foreign key keyboard('user') references machine('id')
-  PRIMARY KEY (`id`)
+  `username` int(10)  not null COMMENT '关联用户' ,
+  PRIMARY KEY (`id`),
+  constraint user_id foreign key(username) references machine(id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `browser` (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
+  `website` varchar(100) NOT NULL COMMENT '浏览网址',
+  `user`  varchar(20)  not null COMMENT '账号' ,
+  `password` varchar(30)  not null COMMENT '密码' ,
+  `username` int(10)  not null COMMENT '关联用户' ,
+  PRIMARY KEY (`id`),
+  constraint browser_id foreign key(username) references machine(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
