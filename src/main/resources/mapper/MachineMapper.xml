@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jimmy.infaction.mapper.MachineMapper">
+  <resultMap id="BaseResultMap" type="com.jimmy.infaction.pojo.Machine">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user" jdbcType="VARCHAR" property="user" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="version_info" jdbcType="VARCHAR" property="version_info" />
+    <result column="uptime" jdbcType="INTEGER" property="uptime" />
+    <result column="cpu" jdbcType="INTEGER" property="cpu" />
+    <result column="memory" jdbcType="INTEGER" property="memory" />
+    <result column="disk" jdbcType="VARCHAR" property="disk" />
+    <result column="netcard" jdbcType="VARCHAR" property="netcard" />
+    <result column="oip" jdbcType="VARCHAR" property="oip" />
+    <result column="isp" jdbcType="VARCHAR" property="isp" />
+    <result column="lon" jdbcType="DOUBLE" property="lon" />
+    <result column="lat" jdbcType="DOUBLE" property="lat" />
+    <result column="down" jdbcType="INTEGER" property="down" />
+    <result column="up" jdbcType="INTEGER" property="up" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user, version, version_info, uptime, cpu, memory, disk, netcard, oip, isp, lon, 
+    lat, down, up
+  </sql>
+  <select id="selectByExample" parameterType="com.jimmy.infaction.pojo.MachineExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from machine
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from machine
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from machine
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Machine" useGeneratedKeys="true">
+    insert into machine (user, version, version_info, 
+      uptime, cpu, memory, 
+      disk, netcard, oip, 
+      isp, lon, lat, down, 
+      up)
+    values (#{user,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{version_info,jdbcType=VARCHAR}, 
+      #{uptime,jdbcType=INTEGER}, #{cpu,jdbcType=INTEGER}, #{memory,jdbcType=INTEGER}, 
+      #{disk,jdbcType=VARCHAR}, #{netcard,jdbcType=VARCHAR}, #{oip,jdbcType=VARCHAR}, 
+      #{isp,jdbcType=VARCHAR}, #{lon,jdbcType=DOUBLE}, #{lat,jdbcType=DOUBLE}, #{down,jdbcType=INTEGER}, 
+      #{up,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Machine" useGeneratedKeys="true">
+    insert into machine
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="user != null">
+        user,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="version_info != null">
+        version_info,
+      </if>
+      <if test="uptime != null">
+        uptime,
+      </if>
+      <if test="cpu != null">
+        cpu,
+      </if>
+      <if test="memory != null">
+        memory,
+      </if>
+      <if test="disk != null">
+        disk,
+      </if>
+      <if test="netcard != null">
+        netcard,
+      </if>
+      <if test="oip != null">
+        oip,
+      </if>
+      <if test="isp != null">
+        isp,
+      </if>
+      <if test="lon != null">
+        lon,
+      </if>
+      <if test="lat != null">
+        lat,
+      </if>
+      <if test="down != null">
+        down,
+      </if>
+      <if test="up != null">
+        up,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="user != null">
+        #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="version_info != null">
+        #{version_info,jdbcType=VARCHAR},
+      </if>
+      <if test="uptime != null">
+        #{uptime,jdbcType=INTEGER},
+      </if>
+      <if test="cpu != null">
+        #{cpu,jdbcType=INTEGER},
+      </if>
+      <if test="memory != null">
+        #{memory,jdbcType=INTEGER},
+      </if>
+      <if test="disk != null">
+        #{disk,jdbcType=VARCHAR},
+      </if>
+      <if test="netcard != null">
+        #{netcard,jdbcType=VARCHAR},
+      </if>
+      <if test="oip != null">
+        #{oip,jdbcType=VARCHAR},
+      </if>
+      <if test="isp != null">
+        #{isp,jdbcType=VARCHAR},
+      </if>
+      <if test="lon != null">
+        #{lon,jdbcType=DOUBLE},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=DOUBLE},
+      </if>
+      <if test="down != null">
+        #{down,jdbcType=INTEGER},
+      </if>
+      <if test="up != null">
+        #{up,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jimmy.infaction.pojo.Machine">
+    update machine
+    <set>
+      <if test="user != null">
+        user = #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="version_info != null">
+        version_info = #{version_info,jdbcType=VARCHAR},
+      </if>
+      <if test="uptime != null">
+        uptime = #{uptime,jdbcType=INTEGER},
+      </if>
+      <if test="cpu != null">
+        cpu = #{cpu,jdbcType=INTEGER},
+      </if>
+      <if test="memory != null">
+        memory = #{memory,jdbcType=INTEGER},
+      </if>
+      <if test="disk != null">
+        disk = #{disk,jdbcType=VARCHAR},
+      </if>
+      <if test="netcard != null">
+        netcard = #{netcard,jdbcType=VARCHAR},
+      </if>
+      <if test="oip != null">
+        oip = #{oip,jdbcType=VARCHAR},
+      </if>
+      <if test="isp != null">
+        isp = #{isp,jdbcType=VARCHAR},
+      </if>
+      <if test="lon != null">
+        lon = #{lon,jdbcType=DOUBLE},
+      </if>
+      <if test="lat != null">
+        lat = #{lat,jdbcType=DOUBLE},
+      </if>
+      <if test="down != null">
+        down = #{down,jdbcType=INTEGER},
+      </if>
+      <if test="up != null">
+        up = #{up,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jimmy.infaction.pojo.Machine">
+    update machine
+    set user = #{user,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      version_info = #{version_info,jdbcType=VARCHAR},
+      uptime = #{uptime,jdbcType=INTEGER},
+      cpu = #{cpu,jdbcType=INTEGER},
+      memory = #{memory,jdbcType=INTEGER},
+      disk = #{disk,jdbcType=VARCHAR},
+      netcard = #{netcard,jdbcType=VARCHAR},
+      oip = #{oip,jdbcType=VARCHAR},
+      isp = #{isp,jdbcType=VARCHAR},
+      lon = #{lon,jdbcType=DOUBLE},
+      lat = #{lat,jdbcType=DOUBLE},
+      down = #{down,jdbcType=INTEGER},
+      up = #{up,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
