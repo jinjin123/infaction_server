@@ -3,6 +3,7 @@
 <mapper namespace="com.jimmy.infaction.mapper.MachineMapper">
   <resultMap id="BaseResultMap" type="com.jimmy.infaction.pojo.Machine">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="hostid" jdbcType="VARCHAR" property="hostid" />
     <result column="user" jdbcType="VARCHAR" property="user" />
     <result column="version" jdbcType="VARCHAR" property="version" />
     <result column="version_info" jdbcType="VARCHAR" property="version_info" />
@@ -17,6 +18,7 @@
     <result column="lat" jdbcType="DOUBLE" property="lat" />
     <result column="down" jdbcType="INTEGER" property="down" />
     <result column="up" jdbcType="INTEGER" property="up" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -48,8 +50,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user, version, version_info, uptime, cpu, memory, disk, netcard, oip, isp, lon, 
-    lat, down, up
+    id, hostid, user, version, version_info, uptime, cpu, memory, disk, netcard, oip, 
+    isp, lon, lat, down, up, createTime
   </sql>
   <select id="selectByExample" parameterType="com.jimmy.infaction.pojo.MachineExample" resultMap="BaseResultMap">
     select
@@ -66,31 +68,38 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="com.jimmy.infaction.pojo.MachineKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from machine
     where id = #{id,jdbcType=INTEGER}
+      and hostid = #{hostid,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="com.jimmy.infaction.pojo.MachineKey">
     delete from machine
     where id = #{id,jdbcType=INTEGER}
+      and hostid = #{hostid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Machine" useGeneratedKeys="true">
-    insert into machine (user, version, version_info, 
-      uptime, cpu, memory, 
-      disk, netcard, oip, 
-      isp, lon, lat, down, 
-      up)
-    values (#{user,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{version_info,jdbcType=VARCHAR}, 
-      #{uptime,jdbcType=INTEGER}, #{cpu,jdbcType=INTEGER}, #{memory,jdbcType=INTEGER}, 
-      #{disk,jdbcType=VARCHAR}, #{netcard,jdbcType=VARCHAR}, #{oip,jdbcType=VARCHAR}, 
-      #{isp,jdbcType=VARCHAR}, #{lon,jdbcType=DOUBLE}, #{lat,jdbcType=DOUBLE}, #{down,jdbcType=INTEGER}, 
-      #{up,jdbcType=INTEGER})
+    insert into machine (hostid, user, version, 
+      version_info, uptime, cpu, 
+      memory, disk, netcard, 
+      oip, isp, lon, lat, 
+      down, up, createTime
+      )
+    values (#{hostid,jdbcType=VARCHAR}, #{user,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, 
+      #{version_info,jdbcType=VARCHAR}, #{uptime,jdbcType=INTEGER}, #{cpu,jdbcType=INTEGER}, 
+      #{memory,jdbcType=INTEGER}, #{disk,jdbcType=VARCHAR}, #{netcard,jdbcType=VARCHAR}, 
+      #{oip,jdbcType=VARCHAR}, #{isp,jdbcType=VARCHAR}, #{lon,jdbcType=DOUBLE}, #{lat,jdbcType=DOUBLE}, 
+      #{down,jdbcType=INTEGER}, #{up,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Machine" useGeneratedKeys="true">
     insert into machine
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="hostid != null">
+        hostid,
+      </if>
       <if test="user != null">
         user,
       </if>
@@ -133,8 +142,14 @@
       <if test="up != null">
         up,
       </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="hostid != null">
+        #{hostid,jdbcType=VARCHAR},
+      </if>
       <if test="user != null">
         #{user,jdbcType=VARCHAR},
       </if>
@@ -176,6 +191,9 @@
       </if>
       <if test="up != null">
         #{up,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -224,8 +242,12 @@
       <if test="up != null">
         up = #{up,jdbcType=INTEGER},
       </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
+      and hostid = #{hostid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jimmy.infaction.pojo.Machine">
     update machine
@@ -242,7 +264,9 @@
       lon = #{lon,jdbcType=DOUBLE},
       lat = #{lat,jdbcType=DOUBLE},
       down = #{down,jdbcType=INTEGER},
-      up = #{up,jdbcType=INTEGER}
+      up = #{up,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
+      and hostid = #{hostid,jdbcType=VARCHAR}
   </update>
 </mapper>

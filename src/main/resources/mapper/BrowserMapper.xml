@@ -6,7 +6,8 @@
     <result column="website" jdbcType="VARCHAR" property="website" />
     <result column="user" jdbcType="VARCHAR" property="user" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="username" jdbcType="INTEGER" property="username" />
+    <result column="hostid" jdbcType="VARCHAR" property="hostid" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -38,7 +39,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, website, user, password, username
+    id, website, user, password, hostid, createTime
   </sql>
   <select id="selectByExample" parameterType="com.jimmy.infaction.pojo.BrowserExample" resultMap="BaseResultMap">
     select
@@ -67,9 +68,9 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Browser" useGeneratedKeys="true">
     insert into browser (website, user, password, 
-      username)
+      hostid, createTime)
     values (#{website,jdbcType=VARCHAR}, #{user,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{username,jdbcType=INTEGER})
+      #{hostid,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Browser" useGeneratedKeys="true">
     insert into browser
@@ -83,8 +84,11 @@
       <if test="password != null">
         password,
       </if>
-      <if test="username != null">
-        username,
+      <if test="hostid != null">
+        hostid,
+      </if>
+      <if test="createTime != null">
+        createTime,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -97,8 +101,11 @@
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="username != null">
-        #{username,jdbcType=INTEGER},
+      <if test="hostid != null">
+        #{hostid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -114,8 +121,11 @@
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="username != null">
-        username = #{username,jdbcType=INTEGER},
+      <if test="hostid != null">
+        hostid = #{hostid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -125,7 +135,8 @@
     set website = #{website,jdbcType=VARCHAR},
       user = #{user,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      username = #{username,jdbcType=INTEGER}
+      hostid = #{hostid,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

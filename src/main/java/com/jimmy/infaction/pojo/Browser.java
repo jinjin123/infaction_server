@@ -1,5 +1,7 @@
 package com.jimmy.infaction.pojo;
 
+import java.util.Date;
+
 public class Browser {
     private Integer id;
 
@@ -9,7 +11,9 @@ public class Browser {
 
     private String password;
 
-    private Integer username;
+    private String hostid;
+
+    private Date createTime;
 
     public Integer getId() {
         return id;
@@ -43,11 +47,19 @@ public class Browser {
         this.password = password == null ? null : password.trim();
     }
 
-    public Integer getUsername() {
-        return username;
+    public String getHostid() {
+        return hostid;
     }
 
-    public void setUsername(Integer username) {
-        this.username = username;
+    public void setHostid(String hostid) {
+        this.hostid = hostid == null ? null : hostid.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

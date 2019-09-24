@@ -4,7 +4,8 @@
   <resultMap id="BaseResultMap" type="com.jimmy.infaction.pojo.Keyboard">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="hit" jdbcType="VARCHAR" property="hit" />
-    <result column="username" jdbcType="INTEGER" property="username" />
+    <result column="hostid" jdbcType="VARCHAR" property="hostid" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -36,7 +37,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, hit, username
+    id, hit, hostid, createTime
   </sql>
   <select id="selectByExample" parameterType="com.jimmy.infaction.pojo.KeyboardExample" resultMap="BaseResultMap">
     select
@@ -64,8 +65,10 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Keyboard" useGeneratedKeys="true">
-    insert into keyboard (hit, username)
-    values (#{hit,jdbcType=VARCHAR}, #{username,jdbcType=INTEGER})
+    insert into keyboard (hit, hostid, createTime
+      )
+    values (#{hit,jdbcType=VARCHAR}, #{hostid,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Keyboard" useGeneratedKeys="true">
     insert into keyboard
@@ -73,16 +76,22 @@
       <if test="hit != null">
         hit,
       </if>
-      <if test="username != null">
-        username,
+      <if test="hostid != null">
+        hostid,
+      </if>
+      <if test="createTime != null">
+        createTime,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="hit != null">
         #{hit,jdbcType=VARCHAR},
       </if>
-      <if test="username != null">
-        #{username,jdbcType=INTEGER},
+      <if test="hostid != null">
+        #{hostid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -92,8 +101,11 @@
       <if test="hit != null">
         hit = #{hit,jdbcType=VARCHAR},
       </if>
-      <if test="username != null">
-        username = #{username,jdbcType=INTEGER},
+      <if test="hostid != null">
+        hostid = #{hostid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -101,7 +113,8 @@
   <update id="updateByPrimaryKey" parameterType="com.jimmy.infaction.pojo.Keyboard">
     update keyboard
     set hit = #{hit,jdbcType=VARCHAR},
-      username = #{username,jdbcType=INTEGER}
+      hostid = #{hostid,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

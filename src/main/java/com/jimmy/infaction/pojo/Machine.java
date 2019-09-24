@@ -1,8 +1,8 @@
 package com.jimmy.infaction.pojo;
 
-public class Machine {
-    private Integer id;
+import java.util.Date;
 
+public class Machine extends MachineKey {
     private String user;
 
     private String version;
@@ -31,13 +31,7 @@ public class Machine {
 
     private Integer up;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private Date createTime;
 
     public String getUser() {
         return user;
@@ -149,5 +143,13 @@ public class Machine {
 
     public void setUp(Integer up) {
         this.up = up;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

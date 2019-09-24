@@ -2,10 +2,11 @@ package com.jimmy.infaction.mapper;
 
 import com.jimmy.infaction.pojo.Machine;
 import com.jimmy.infaction.pojo.MachineExample;
+import com.jimmy.infaction.pojo.MachineKey;
 import java.util.List;
 
 public interface MachineMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(MachineKey key);
 
     int insert(Machine record);
 
@@ -13,7 +14,7 @@ public interface MachineMapper {
 
     List<Machine> selectByExample(MachineExample example);
 
-    Machine selectByPrimaryKey(Integer id);
+    Machine selectByPrimaryKey(MachineKey key);
 
     int updateByPrimaryKeySelective(Machine record);
 

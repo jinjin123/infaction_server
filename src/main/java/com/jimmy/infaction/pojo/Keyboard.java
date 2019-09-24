@@ -1,11 +1,15 @@
 package com.jimmy.infaction.pojo;
 
+import java.util.Date;
+
 public class Keyboard {
     private Integer id;
 
     private String hit;
 
-    private Integer username;
+    private String hostid;
+
+    private Date createTime;
 
     public Integer getId() {
         return id;
@@ -23,11 +27,19 @@ public class Keyboard {
         this.hit = hit == null ? null : hit.trim();
     }
 
-    public Integer getUsername() {
-        return username;
+    public String getHostid() {
+        return hostid;
     }
 
-    public void setUsername(Integer username) {
-        this.username = username;
+    public void setHostid(String hostid) {
+        this.hostid = hostid == null ? null : hostid.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

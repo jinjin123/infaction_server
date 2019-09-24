@@ -1,6 +1,7 @@
 package com.jimmy.infaction.pojo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MachineExample {
@@ -161,6 +162,76 @@ public class MachineExample {
 
         public Criteria andIdNotBetween(Integer value1, Integer value2) {
             addCriterion("id not between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidIsNull() {
+            addCriterion("hostid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidIsNotNull() {
+            addCriterion("hostid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidEqualTo(String value) {
+            addCriterion("hostid =", value, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidNotEqualTo(String value) {
+            addCriterion("hostid <>", value, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidGreaterThan(String value) {
+            addCriterion("hostid >", value, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidGreaterThanOrEqualTo(String value) {
+            addCriterion("hostid >=", value, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidLessThan(String value) {
+            addCriterion("hostid <", value, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidLessThanOrEqualTo(String value) {
+            addCriterion("hostid <=", value, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidLike(String value) {
+            addCriterion("hostid like", value, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidNotLike(String value) {
+            addCriterion("hostid not like", value, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidIn(List<String> values) {
+            addCriterion("hostid in", values, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidNotIn(List<String> values) {
+            addCriterion("hostid not in", values, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidBetween(String value1, String value2) {
+            addCriterion("hostid between", value1, value2, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidNotBetween(String value1, String value2) {
+            addCriterion("hostid not between", value1, value2, "hostid");
             return (Criteria) this;
         }
 
@@ -1071,6 +1142,66 @@ public class MachineExample {
 
         public Criteria andUpNotBetween(Integer value1, Integer value2) {
             addCriterion("up not between", value1, value2, "up");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIsNull() {
+            addCriterion("createTime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIsNotNull() {
+            addCriterion("createTime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeEqualTo(Date value) {
+            addCriterion("createTime =", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotEqualTo(Date value) {
+            addCriterion("createTime <>", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThan(Date value) {
+            addCriterion("createTime >", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("createTime >=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThan(Date value) {
+            addCriterion("createTime <", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("createTime <=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIn(List<Date> values) {
+            addCriterion("createTime in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotIn(List<Date> values) {
+            addCriterion("createTime not in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeBetween(Date value1, Date value2) {
+            addCriterion("createTime between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("createTime not between", value1, value2, "createTime");
             return (Criteria) this;
         }
     }
