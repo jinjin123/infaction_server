@@ -102,17 +102,52 @@
     delete from machine
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+  <sql id="Default_Cloumns">
+    <trim suffixOverrides=",">
+      <if test="id != null">id,</if>
+      <if test="hostid != null">hostid,</if>
+      <if test="user != null">user,</if>
+      <if test="version != null">version,</if>
+      <if test="version_info != null">version_info,</if>
+      <if test="uptime != null">uptime,</if>
+      <if test="cpu != null">cpu,</if>
+      <if test="memory != null">memory,</if>
+      <if test="disk != null">disk,</if>
+      <if test="netcard != null">netcard,</if>
+      <if test="oip != null">oip,</if>
+      <if test="isp != null">isp,</if>
+      <if test="lon != null">lon,</if>
+      <if test="lat != null">lat,</if>
+      <if test="down != null">down,</if>
+      <if test="up != null">up,</if>
+      <if test="createTime != null">createTime</if>
+    </trim>
+  </sql>
+  <sql id="Default_Values">
+    <trim suffixOverrides=",">
+      <if test="id != null">${id},</if>
+      <if test="hostid != null">#{hostid},</if>
+      <if test="user != null">#{user},</if>
+      <if test="version != null">#{version},</if>
+      <if test="version_info != null">#{version_info},</if>
+      <if test="uptime != null">#{uptime},</if>
+      <if test="cpu != null">#{cpu},</if>
+      <if test="memory != null">#{memory},</if>
+      <if test="disk != null">#{disk},</if>
+      <if test="netcard != null">#{netcard},</if>
+      <if test="oip != null">#{oip},</if>
+      <if test="isp != null">#{isp},</if>
+      <if test="lon != null">#{lon},</if>
+      <if test="lat != null">#{lat},</if>
+      <if test="down != null">#{down},</if>
+      <if test="up != null">#{up},</if>
+      <if test="createTime != null">#{createTime}</if>
+    </trim>
+  </sql>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Machine" useGeneratedKeys="true">
-    insert into machine (user, version, version_info, 
-      uptime, cpu, memory, 
-      disk, oip, isp, lon, 
-      lat, down, up, hostid, 
-      createTime, netcard)
-    values (#{user,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{version_info,jdbcType=VARCHAR}, 
-      #{uptime,jdbcType=INTEGER}, #{cpu,jdbcType=INTEGER}, #{memory,jdbcType=INTEGER}, 
-      #{disk,jdbcType=VARCHAR}, #{oip,jdbcType=VARCHAR}, #{isp,jdbcType=VARCHAR}, #{lon,jdbcType=DOUBLE}, 
-      #{lat,jdbcType=DOUBLE}, #{down,jdbcType=INTEGER}, #{up,jdbcType=INTEGER}, #{hostid,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{netcard,jdbcType=LONGVARCHAR})
+    insert into machine (<include refid="Default_Cloumns"/>)
+    values(<include refid="Default_Values"/>)
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Machine" useGeneratedKeys="true">
     insert into machine
