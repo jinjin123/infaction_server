@@ -2,7 +2,9 @@ package com.jimmy.infaction.pojo;
 
 import java.util.Date;
 
-public class Machine extends MachineKey {
+public class Machine {
+    private Integer id;
+
     private String user;
 
     private String version;
@@ -17,8 +19,6 @@ public class Machine extends MachineKey {
 
     private String disk;
 
-    private String netcard;
-
     private String oip;
 
     private String isp;
@@ -31,7 +31,19 @@ public class Machine extends MachineKey {
 
     private Integer up;
 
+    private String hostid;
+
     private Date createTime;
+
+    private String netcard;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getUser() {
         return user;
@@ -89,14 +101,6 @@ public class Machine extends MachineKey {
         this.disk = disk == null ? null : disk.trim();
     }
 
-    public String getNetcard() {
-        return netcard;
-    }
-
-    public void setNetcard(String netcard) {
-        this.netcard = netcard == null ? null : netcard.trim();
-    }
-
     public String getOip() {
         return oip;
     }
@@ -145,11 +149,27 @@ public class Machine extends MachineKey {
         this.up = up;
     }
 
+    public String getHostid() {
+        return hostid;
+    }
+
+    public void setHostid(String hostid) {
+        this.hostid = hostid == null ? null : hostid.trim();
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getNetcard() {
+        return netcard;
+    }
+
+    public void setNetcard(String netcard) {
+        this.netcard = netcard == null ? null : netcard.trim();
     }
 }

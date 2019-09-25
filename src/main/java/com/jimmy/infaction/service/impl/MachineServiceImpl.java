@@ -2,10 +2,15 @@ package com.jimmy.infaction.service.impl;
 
 import com.jimmy.infaction.mapper.MachineMapper;
 import com.jimmy.infaction.pojo.Machine;
+import com.jimmy.infaction.pojo.MachineExample;
 import com.jimmy.infaction.service.MachineService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -15,11 +20,30 @@ import org.springframework.stereotype.Service;
 public class MachineServiceImpl implements MachineService {
 	@Autowired
 	MachineMapper machineMapper;
+
+
+	/**
+	 * @Author jimmy on 13:39 2019/9/25
+	 * @Description //TODO
+	 * @Param [hostid]
+	 * @return boolean
+	 **/
 	@Override
-	public Machine getMachineById(String hostid) {
-		return null;
+	public boolean isExist(String hostid) {
+		MachineExample example = new MachineExample();
+		example.or().andHostidEqualTo(hostid);
+		List<Machine> result = machineMapper.selectByExample(example);
+		if(!result.isEmpty())
+			return true;
+		return false;
 	}
 
+	/**
+	 * @Author jimmy on 13:40 2019/9/25
+	 * @Description //TODO
+	 * @Param [machine]
+	 * @return void
+	 **/
 	@Override
 	public void insertMachine(Machine machine) {
 		machineMapper.insert(machine);
@@ -37,8 +61,8 @@ public class MachineServiceImpl implements MachineService {
 //	}
 
 	@Override
-	public void deleteMachine(String hostid) {
-
+	public void deleteMachine(Integer id ) {
+		machineMapper.deleteByPrimaryKey(id);
 	}
 
 	@Override

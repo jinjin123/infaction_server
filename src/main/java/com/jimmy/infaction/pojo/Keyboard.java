@@ -5,11 +5,11 @@ import java.util.Date;
 public class Keyboard {
     private Integer id;
 
-    private String hit;
-
     private String hostid;
 
     private Date createTime;
+
+    private String hit;
 
     public Integer getId() {
         return id;
@@ -17,14 +17,6 @@ public class Keyboard {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getHit() {
-        return hit;
-    }
-
-    public void setHit(String hit) {
-        this.hit = hit == null ? null : hit.trim();
     }
 
     public String getHostid() {
@@ -41,5 +33,13 @@ public class Keyboard {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getHit() {
+        return hit;
+    }
+
+    public void setHit(String hit) {
+        this.hit = hit == null ? null : hit.trim();
     }
 }

@@ -165,76 +165,6 @@ public class MachineExample {
             return (Criteria) this;
         }
 
-        public Criteria andHostidIsNull() {
-            addCriterion("hostid is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andHostidIsNotNull() {
-            addCriterion("hostid is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andHostidEqualTo(String value) {
-            addCriterion("hostid =", value, "hostid");
-            return (Criteria) this;
-        }
-
-        public Criteria andHostidNotEqualTo(String value) {
-            addCriterion("hostid <>", value, "hostid");
-            return (Criteria) this;
-        }
-
-        public Criteria andHostidGreaterThan(String value) {
-            addCriterion("hostid >", value, "hostid");
-            return (Criteria) this;
-        }
-
-        public Criteria andHostidGreaterThanOrEqualTo(String value) {
-            addCriterion("hostid >=", value, "hostid");
-            return (Criteria) this;
-        }
-
-        public Criteria andHostidLessThan(String value) {
-            addCriterion("hostid <", value, "hostid");
-            return (Criteria) this;
-        }
-
-        public Criteria andHostidLessThanOrEqualTo(String value) {
-            addCriterion("hostid <=", value, "hostid");
-            return (Criteria) this;
-        }
-
-        public Criteria andHostidLike(String value) {
-            addCriterion("hostid like", value, "hostid");
-            return (Criteria) this;
-        }
-
-        public Criteria andHostidNotLike(String value) {
-            addCriterion("hostid not like", value, "hostid");
-            return (Criteria) this;
-        }
-
-        public Criteria andHostidIn(List<String> values) {
-            addCriterion("hostid in", values, "hostid");
-            return (Criteria) this;
-        }
-
-        public Criteria andHostidNotIn(List<String> values) {
-            addCriterion("hostid not in", values, "hostid");
-            return (Criteria) this;
-        }
-
-        public Criteria andHostidBetween(String value1, String value2) {
-            addCriterion("hostid between", value1, value2, "hostid");
-            return (Criteria) this;
-        }
-
-        public Criteria andHostidNotBetween(String value1, String value2) {
-            addCriterion("hostid not between", value1, value2, "hostid");
-            return (Criteria) this;
-        }
-
         public Criteria andUserIsNull() {
             addCriterion("user is null");
             return (Criteria) this;
@@ -695,76 +625,6 @@ public class MachineExample {
             return (Criteria) this;
         }
 
-        public Criteria andNetcardIsNull() {
-            addCriterion("netcard is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andNetcardIsNotNull() {
-            addCriterion("netcard is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andNetcardEqualTo(String value) {
-            addCriterion("netcard =", value, "netcard");
-            return (Criteria) this;
-        }
-
-        public Criteria andNetcardNotEqualTo(String value) {
-            addCriterion("netcard <>", value, "netcard");
-            return (Criteria) this;
-        }
-
-        public Criteria andNetcardGreaterThan(String value) {
-            addCriterion("netcard >", value, "netcard");
-            return (Criteria) this;
-        }
-
-        public Criteria andNetcardGreaterThanOrEqualTo(String value) {
-            addCriterion("netcard >=", value, "netcard");
-            return (Criteria) this;
-        }
-
-        public Criteria andNetcardLessThan(String value) {
-            addCriterion("netcard <", value, "netcard");
-            return (Criteria) this;
-        }
-
-        public Criteria andNetcardLessThanOrEqualTo(String value) {
-            addCriterion("netcard <=", value, "netcard");
-            return (Criteria) this;
-        }
-
-        public Criteria andNetcardLike(String value) {
-            addCriterion("netcard like", value, "netcard");
-            return (Criteria) this;
-        }
-
-        public Criteria andNetcardNotLike(String value) {
-            addCriterion("netcard not like", value, "netcard");
-            return (Criteria) this;
-        }
-
-        public Criteria andNetcardIn(List<String> values) {
-            addCriterion("netcard in", values, "netcard");
-            return (Criteria) this;
-        }
-
-        public Criteria andNetcardNotIn(List<String> values) {
-            addCriterion("netcard not in", values, "netcard");
-            return (Criteria) this;
-        }
-
-        public Criteria andNetcardBetween(String value1, String value2) {
-            addCriterion("netcard between", value1, value2, "netcard");
-            return (Criteria) this;
-        }
-
-        public Criteria andNetcardNotBetween(String value1, String value2) {
-            addCriterion("netcard not between", value1, value2, "netcard");
-            return (Criteria) this;
-        }
-
         public Criteria andOipIsNull() {
             addCriterion("oip is null");
             return (Criteria) this;
@@ -1142,6 +1002,76 @@ public class MachineExample {
 
         public Criteria andUpNotBetween(Integer value1, Integer value2) {
             addCriterion("up not between", value1, value2, "up");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidIsNull() {
+            addCriterion("hostid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidIsNotNull() {
+            addCriterion("hostid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidEqualTo(String value) {
+            addCriterion("hostid =", value, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidNotEqualTo(String value) {
+            addCriterion("hostid <>", value, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidGreaterThan(String value) {
+            addCriterion("hostid >", value, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidGreaterThanOrEqualTo(String value) {
+            addCriterion("hostid >=", value, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidLessThan(String value) {
+            addCriterion("hostid <", value, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidLessThanOrEqualTo(String value) {
+            addCriterion("hostid <=", value, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidLike(String value) {
+            addCriterion("hostid like", value, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidNotLike(String value) {
+            addCriterion("hostid not like", value, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidIn(List<String> values) {
+            addCriterion("hostid in", values, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidNotIn(List<String> values) {
+            addCriterion("hostid not in", values, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidBetween(String value1, String value2) {
+            addCriterion("hostid between", value1, value2, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHostidNotBetween(String value1, String value2) {
+            addCriterion("hostid not between", value1, value2, "hostid");
             return (Criteria) this;
         }
 

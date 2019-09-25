@@ -11,8 +11,14 @@ import com.jimmy.infaction.pojo.Machine;
  **/
 public interface MachineService {
 
-	Machine getMachineById(String hostid);
 
+	/**
+	 * @Author jimmy on 13:39 2019/9/25
+	 * @Description //TODO
+	 * @Param [hostid]
+	 * @return boolean
+	 **/
+	boolean isExist(String hostid);
 	/**
 	 * @Author jimmy on 19:32 2019/9/24
 	 * @Description //insert machine
@@ -24,7 +30,7 @@ public interface MachineService {
 //	                   Integer uptime,Integer up,Integer down,Double lat,Double lon);
 
 
-	void deleteMachine(String hostid);
+	void deleteMachine(Integer id);
 
 	void updateMachine();
 

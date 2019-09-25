@@ -5,8 +5,6 @@ import java.util.Date;
 public class Browser {
     private Integer id;
 
-    private String website;
-
     private String user;
 
     private String password;
@@ -15,20 +13,14 @@ public class Browser {
 
     private Date createTime;
 
+    private String website;
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website == null ? null : website.trim();
     }
 
     public String getUser() {
@@ -61,5 +53,13 @@ public class Browser {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website == null ? null : website.trim();
     }
 }

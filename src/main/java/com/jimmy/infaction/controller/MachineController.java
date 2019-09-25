@@ -1,7 +1,6 @@
 package com.jimmy.infaction.controller;
 
 
-import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jimmy.infaction.pojo.Machine;
 import org.slf4j.Logger;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.jimmy.infaction.service.MachineService;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +38,11 @@ public class MachineController {
 		try{
 			Machine machine = new Machine();
 			Map map = jsonMapper.readValue(body, Map.class);
+			boolean exist = machineService.isExist((String)map.get("hostid"));
+			if (exist){
+				res.put("succeed",false);
+				return new ResponseEntity<Map>(res,HttpStatus.OK);
+			}
 			String netcard = ((List) map.get("net")).toString() ;
 			String dtr = ((List) map.get("disk")).toString();
 			machine.setDisk(dtr);
@@ -57,8 +60,8 @@ public class MachineController {
 			machine.setVersion((String)map.get("platform"));
 			machine.setVersion_info((String)map.get("os"));
 			machine.setHostid((String)map.get("hostid"));
-			machineService.insertMachine(machine);
 			res.put("succeed",true);
+			machineService.insertMachine(machine);
 			return new ResponseEntity<Map>(res,HttpStatus.OK);
 		} catch (Throwable  t) {
 			log.error(t.getMessage(),t);

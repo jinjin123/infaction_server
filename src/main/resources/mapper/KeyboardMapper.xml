@@ -3,9 +3,11 @@
 <mapper namespace="com.jimmy.infaction.mapper.KeyboardMapper">
   <resultMap id="BaseResultMap" type="com.jimmy.infaction.pojo.Keyboard">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="hit" jdbcType="VARCHAR" property="hit" />
     <result column="hostid" jdbcType="VARCHAR" property="hostid" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.jimmy.infaction.pojo.Keyboard">
+    <result column="hit" jdbcType="LONGVARCHAR" property="hit" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -37,8 +39,28 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, hit, hostid, createTime
+    id, hostid, createTime
   </sql>
+  <sql id="Blob_Column_List">
+    hit
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.jimmy.infaction.pojo.KeyboardExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from keyboard
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" parameterType="com.jimmy.infaction.pojo.KeyboardExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -54,9 +76,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from keyboard
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -65,55 +89,61 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Keyboard" useGeneratedKeys="true">
-    insert into keyboard (hit, hostid, createTime
+    insert into keyboard (hostid, createTime, hit
       )
-    values (#{hit,jdbcType=VARCHAR}, #{hostid,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+    values (#{hostid,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{hit,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Keyboard" useGeneratedKeys="true">
     insert into keyboard
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="hit != null">
-        hit,
-      </if>
       <if test="hostid != null">
         hostid,
       </if>
       <if test="createTime != null">
         createTime,
       </if>
+      <if test="hit != null">
+        hit,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="hit != null">
-        #{hit,jdbcType=VARCHAR},
-      </if>
       <if test="hostid != null">
         #{hostid,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="hit != null">
+        #{hit,jdbcType=LONGVARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.jimmy.infaction.pojo.Keyboard">
     update keyboard
     <set>
-      <if test="hit != null">
-        hit = #{hit,jdbcType=VARCHAR},
-      </if>
       <if test="hostid != null">
         hostid = #{hostid,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         createTime = #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="hit != null">
+        hit = #{hit,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jimmy.infaction.pojo.Keyboard">
+    update keyboard
+    set hostid = #{hostid,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      hit = #{hit,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jimmy.infaction.pojo.Keyboard">
     update keyboard
-    set hit = #{hit,jdbcType=VARCHAR},
-      hostid = #{hostid,jdbcType=VARCHAR},
+    set hostid = #{hostid,jdbcType=VARCHAR},
       createTime = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>

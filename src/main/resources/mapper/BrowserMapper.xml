@@ -3,11 +3,13 @@
 <mapper namespace="com.jimmy.infaction.mapper.BrowserMapper">
   <resultMap id="BaseResultMap" type="com.jimmy.infaction.pojo.Browser">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="website" jdbcType="VARCHAR" property="website" />
     <result column="user" jdbcType="VARCHAR" property="user" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="hostid" jdbcType="VARCHAR" property="hostid" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.jimmy.infaction.pojo.Browser">
+    <result column="website" jdbcType="LONGVARCHAR" property="website" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -39,8 +41,28 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, website, user, password, hostid, createTime
+    id, user, password, hostid, createTime
   </sql>
+  <sql id="Blob_Column_List">
+    website
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.jimmy.infaction.pojo.BrowserExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from browser
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" parameterType="com.jimmy.infaction.pojo.BrowserExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -56,9 +78,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from browser
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -67,17 +91,14 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Browser" useGeneratedKeys="true">
-    insert into browser (website, user, password, 
-      hostid, createTime)
-    values (#{website,jdbcType=VARCHAR}, #{user,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{hostid,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+    insert into browser (user, password, hostid, 
+      createTime, website)
+    values (#{user,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{hostid,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{website,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Browser" useGeneratedKeys="true">
     insert into browser
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="website != null">
-        website,
-      </if>
       <if test="user != null">
         user,
       </if>
@@ -90,11 +111,11 @@
       <if test="createTime != null">
         createTime,
       </if>
+      <if test="website != null">
+        website,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="website != null">
-        #{website,jdbcType=VARCHAR},
-      </if>
       <if test="user != null">
         #{user,jdbcType=VARCHAR},
       </if>
@@ -107,14 +128,14 @@
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="website != null">
+        #{website,jdbcType=LONGVARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.jimmy.infaction.pojo.Browser">
     update browser
     <set>
-      <if test="website != null">
-        website = #{website,jdbcType=VARCHAR},
-      </if>
       <if test="user != null">
         user = #{user,jdbcType=VARCHAR},
       </if>
@@ -127,13 +148,24 @@
       <if test="createTime != null">
         createTime = #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="website != null">
+        website = #{website,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jimmy.infaction.pojo.Browser">
+    update browser
+    set user = #{user,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      hostid = #{hostid,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      website = #{website,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jimmy.infaction.pojo.Browser">
     update browser
-    set website = #{website,jdbcType=VARCHAR},
-      user = #{user,jdbcType=VARCHAR},
+    set user = #{user,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       hostid = #{hostid,jdbcType=VARCHAR},
       createTime = #{createTime,jdbcType=TIMESTAMP}

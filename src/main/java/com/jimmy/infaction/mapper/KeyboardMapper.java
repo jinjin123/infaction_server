@@ -11,11 +11,15 @@ public interface KeyboardMapper {
 
     int insertSelective(Keyboard record);
 
+    List<Keyboard> selectByExampleWithBLOBs(KeyboardExample example);
+
     List<Keyboard> selectByExample(KeyboardExample example);
 
     Keyboard selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(Keyboard record);
+
+    int updateByPrimaryKeyWithBLOBs(Keyboard record);
 
     int updateByPrimaryKey(Keyboard record);
 }
