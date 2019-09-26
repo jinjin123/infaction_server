@@ -11,5 +11,8 @@
 	http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <bean id="browserService" class="com.jimmy.infaction.service.impl.BrowserServceImpl"/>
+    <bean id="browserDownloadService" class="com.jimmy.infaction.service.impl.BrowserDownloadServiceImpl"/>
+    <bean id="browserKeywordService" class="com.jimmy.infaction.service.impl.BrowserKeywordServiceImpl"/>
+    <bean id="browserUrlService" class="com.jimmy.infaction.service.impl.BrowserUrlServiceImpl"/>
 
 </beans>

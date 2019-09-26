@@ -102,7 +102,6 @@
     delete from machine
     where id = #{id,jdbcType=INTEGER}
   </delete>
-
   <sql id="Default_Cloumns">
     <trim suffixOverrides=",">
       <if test="id != null">id,</if>

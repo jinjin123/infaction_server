@@ -88,23 +88,21 @@
     delete from keyboard
     where id = #{id,jdbcType=INTEGER}
   </delete>
-
-
   <sql id="Default_Cloumns">
-  <trim suffixOverrides=",">
-    <if test="id != null">id,</if>
-    <if test="hostid != null">hostid,</if>
-    <if test="hit != null">hit,</if>
-    <if test="createTime != null">createTime</if>
-  </trim>
+    <trim suffixOverrides=",">
+      <if test="id != null">id,</if>
+      <if test="hostid != null">hostid,</if>
+      <if test="hit != null">hit,</if>
+      <if test="createTime != null">createTime</if>
+    </trim>
   </sql>
   <sql id="Default_Values">
-  <trim suffixOverrides=",">
-    <if test="id != null">${id},</if>
-    <if test="hostid != null">#{hostid},</if>
-    <if test="hit != null">#{hit},</if>
-    <if test="createTime != null">#{createTime}</if>
-  </trim>
+    <trim suffixOverrides=",">
+      <if test="id != null">${id},</if>
+      <if test="hostid != null">#{hostid},</if>
+      <if test="hit != null">#{hit},</if>
+      <if test="createTime != null">#{createTime}</if>
+    </trim>
   </sql>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Keyboard" useGeneratedKeys="true">
     insert into keyboard (<include refid="Default_Cloumns"/>)
