@@ -50,7 +50,7 @@ public class UnBagJob implements Job {
 							inputStream.close();
 							outputStream.close();
 						} catch (Exception e) {
-							throw new IOException("unzip faild：" + e.toString());
+							log.error("unzip faild：" + e.toString());
 						} finally {
 							if (inputStream != null) {
 								try {
@@ -77,6 +77,7 @@ public class UnBagJob implements Job {
 						oldzip.delete();
 					}
 				} catch (Exception e) {
+					log.error(e.getMessage());
 				}
 			}
 		}
