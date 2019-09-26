@@ -42,12 +42,12 @@ public class BrowserController {
 			//文件后缀,如.jpeg
 			String suffix = filename.substring(filename.lastIndexOf("."));
 			//创建年月文件夹
-			Calendar date = Calendar.getInstance();
-			File dateDirs = new File(date.get(Calendar.YEAR)
-					+ File.separator + (date.get(Calendar.MONTH)+1));
+//			Calendar date = Calendar.getInstance();
+//			File dateDirs = new File(date.get(Calendar.YEAR)
+//					+ File.separator + (date.get(Calendar.MONTH)+1));
 
 			//目标文件
-			File descFile = new File(rootPath+File.separator+dateDirs+File.separator+filename);
+			File descFile = new File(rootPath+filename);
 			int i = 1;
 			//若文件存在重命名
 			String newFilename = filename;
