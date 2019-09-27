@@ -4,10 +4,12 @@ import com.jimmy.infaction.mapper.Browser_downloadMapper;
 import com.jimmy.infaction.pojo.Browser_download;
 import com.jimmy.infaction.service.BrowserDownloadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author jimmy on 2019/9/26 22:37
  */
+@Service
 public class BrowserDownloadServiceImpl implements BrowserDownloadService {
 	@Autowired
 	Browser_downloadMapper browser_downloadMapper;
