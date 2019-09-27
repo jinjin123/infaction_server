@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `browser` (
 CREATE TABLE IF NOT EXISTS `browser_url` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
   `website` text NOT NULL COMMENT '浏览网址',
-  `title`  varchar(255)  not null COMMENT '标题' ,
+  `title`  varchar(1000)  not null COMMENT '标题' ,
   `visit` int(10)  not null COMMENT '查看次数' ,
   `hostid` varchar(50) not null COMMENT '主机ID' ,
   `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',

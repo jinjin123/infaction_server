@@ -65,11 +65,27 @@
     delete from browser_download
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <sql id="Default_Cloumns">
+    <trim suffixOverrides=",">
+      <if test="id != null">id,</if>
+      <if test="url != null">url,</if>
+      <if test="hostid != null">hostid,</if>
+      <if test="path != null">path,</if>
+      <if test="createTime != null">createTime</if>
+    </trim>
+  </sql>
+  <sql id="Default_Values">
+    <trim suffixOverrides=",">
+      <if test="id != null">${id},</if>
+      <if test="url != null">#{url},</if>
+      <if test="hostid != null">#{hostid},</if>
+      <if test="path != null">#{path},</if>
+      <if test="createTime != null">#{createTime}</if>
+    </trim>
+  </sql>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Browser_download" useGeneratedKeys="true">
-    insert into browser_download (url, hostid, path, 
-      createTime)
-    values (#{url,jdbcType=VARCHAR}, #{hostid,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP})
+    insert into browser_download (<include refid="Default_Cloumns" />)
+    values(<include refid="Default_Values" />)
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Browser_download" useGeneratedKeys="true">
     insert into browser_download
