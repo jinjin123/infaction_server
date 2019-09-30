@@ -24,4 +24,9 @@ public class BrowserFailServiceImpl implements BrowserFailService {
 	public void insert(Browser_fail browser_fail) {
 		browser_failMapper.insert(browser_fail);
 	}
+	@Override
+	public String findOne()  {
+		String hostid = browser_failMapper.findOne();
+		return hostid;
+	}
 }

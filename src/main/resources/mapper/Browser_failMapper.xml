@@ -55,6 +55,9 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="findOne" parameterType="string" resultType="String">
+    select hostid from browser_fail order by createTime asc limit 1
+    </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

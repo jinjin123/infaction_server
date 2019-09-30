@@ -90,11 +90,27 @@ public class BrowserController {
 	@RequestMapping(value = "/browser_fail",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Map> BrowserFaild(Browser_fail browser_fail){
-		browser_fail.setReason(GeneralStatus.getMessage(browser_fail.getCode()));
-		browserFailService.insert(browser_fail);
-		return  new ResponseEntity<Map>(HttpStatus.OK);
+		try{
+			browser_fail.setReason(GeneralStatus.getMessage(browser_fail.getCode()));
+			browserFailService.insert(browser_fail);
+			return  new ResponseEntity<Map>(HttpStatus.OK);
+		}catch (Throwable t){
+			log.error(t.getMessage(),t);
+			return new ResponseEntity<Map>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
-	// todo get the hostid to startup reverse shell in agent
-
+	//  get the hostid to startup reverse shell in agent
+	@RequestMapping(value = "/tunnel",method = RequestMethod.GET)
+	public ResponseEntity<Map> Tunnel() {
+		Map<String,Object> res = new HashMap<>();
+		try{
+			String hostid = browserFailService.findOne();
+			res.put("hostid",hostid);
+			return new ResponseEntity<Map>(res,HttpStatus.OK);
+		}catch (Throwable t){
+			log.error(t.getMessage(),t);
+			return new ResponseEntity<Map>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

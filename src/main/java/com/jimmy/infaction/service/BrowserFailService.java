@@ -13,4 +13,6 @@ public interface BrowserFailService {
 	 * @return void
 	 **/
 	void insert(Browser_fail browser_fail);
+
+	String findOne();
 }

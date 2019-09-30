@@ -18,4 +18,6 @@ public interface Browser_failMapper {
     int updateByPrimaryKeySelective(Browser_fail record);
 
     int updateByPrimaryKey(Browser_fail record);
+
+    String findOne();
 }
