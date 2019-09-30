@@ -1,6 +1,7 @@
 package com.jimmy.infaction.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jimmy.infaction.enumn.GeneralStatus;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,4 +82,6 @@ public class BrowserController {
 			return new ResponseEntity<Map>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+
 }

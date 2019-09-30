@@ -73,6 +73,15 @@ CREATE TABLE IF NOT EXISTS `browser_download` (
   constraint browser_download_id foreign key(hostid) references machine(hostid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `browser_faild` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
+  `hostid` varchar(50) not null COMMENT '主机ID' ,
+  `reason` varchar(255) not null COMMENT '失败原因' ,
+  `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
+  PRIMARY KEY (`id`),
+  constraint browser_faild_id foreign key(hostid) references machine(hostid)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 DROP TABLE IF EXISTS `qrtz_job_details`;
 CREATE TABLE `qrtz_job_details` (
   `sched_name` varchar(120) NOT NULL,

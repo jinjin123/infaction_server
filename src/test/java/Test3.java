@@ -1,6 +1,7 @@
 
 import java.util.Arrays;
 
+import com.jimmy.infaction.enumn.GeneralStatus;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
@@ -10,6 +11,8 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import org.junit.Test;
+
 /**
  * @author jimmy on 2019/9/28 18:03
  */
@@ -50,6 +53,11 @@ public class Test3 {
 			System.out.println(msg);
 		}
 
+	}
+
+	@Test
+	public void Enummtest(){
+		System.out.println(GeneralStatus.getMessage(101));
 	}
 
 }
