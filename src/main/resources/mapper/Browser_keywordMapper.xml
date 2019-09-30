@@ -64,25 +64,11 @@
     delete from browser_keyword
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <sql id="Default_Cloumns">
-    <trim suffixOverrides=",">
-      <if test="id != null">id,</if>
-      <if test="keyword != null">keyword,</if>
-      <if test="hostid != null">hostid,</if>
-      <if test="createTime != null">createTime</if>
-    </trim>
-  </sql>
-  <sql id="Default_Values">
-    <trim suffixOverrides=",">
-      <if test="id != null">${id},</if>
-      <if test="keyword != null">#{keyword},</if>
-      <if test="hostid != null">#{hostid},</if>
-      <if test="createTime != null">#{createTime}</if>
-    </trim>
-  </sql>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Browser_keyword" useGeneratedKeys="true">
-    insert into browser_keyword (<include refid="Default_Cloumns" />)
-    values(<include refid="Default_Values" />)
+    insert into browser_keyword (keyword, hostid, createTime
+      )
+    values (#{keyword,jdbcType=VARCHAR}, #{hostid,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Browser_keyword" useGeneratedKeys="true">
     insert into browser_keyword

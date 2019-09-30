@@ -175,7 +175,7 @@ public class TestA extends AbstractTransactionalJUnit4SpringContextTests  {
 				System.out.println(threadName+"处理了"+kList.size()+"条！startIndex:"+startIndex+"|endIndex:"+endIndex);
 				for (HistoryKeyResult result : kList) {
 					Browser_keyword browser_keyword = new Browser_keyword();
-					browser_keyword.setKey(result.getKey());
+					browser_keyword.setKeyword(result.getKey());
 					browser_keyword.setHostid(hostid);
 					browserKeywordService.insert(browser_keyword);
 				}

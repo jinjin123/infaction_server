@@ -90,29 +90,11 @@
     delete from browser_url
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <sql id="Default_Cloumns">
-    <trim suffixOverrides=",">
-      <if test="id != null">id,</if>
-      <if test="website != null">website,</if>
-      <if test="title != null">title,</if>
-      <if test="visit != null">visit,</if>
-      <if test="hostid != null">hostid,</if>
-      <if test="createTime != null">createTime</if>
-    </trim>
-  </sql>
-  <sql id="Default_Values">
-    <trim suffixOverrides=",">
-      <if test="id != null">${id},</if>
-      <if test="website != null">#{website},</if>
-      <if test="title != null">#{title},</if>
-      <if test="visit != null">#{visit},</if>
-      <if test="hostid != null">#{hostid},</if>
-      <if test="createTime != null">#{createTime}</if>
-    </trim>
-  </sql>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Browser_url" useGeneratedKeys="true">
-    insert into browser_url (<include refid="Default_Cloumns" />)
-    values(<include refid="Default_Values" />)
+    insert into browser_url (title, visit, hostid, 
+      createTime, website)
+    values (#{title,jdbcType=VARCHAR}, #{visit,jdbcType=INTEGER}, #{hostid,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{website,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Browser_url" useGeneratedKeys="true">
     insert into browser_url

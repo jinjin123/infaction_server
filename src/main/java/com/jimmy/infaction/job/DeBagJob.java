@@ -25,8 +25,6 @@ import java.util.List;
  */
 public class DeBagJob  implements  Job {
 	private static Logger log = LoggerFactory.getLogger(DeBagJob.class);
-//	@Autowired
-//	private BrowserService browserService;
 	@Override
 	public void execute(JobExecutionContext jobContext) throws JobExecutionException {
 		ApplicationContext applicationContext=null;
@@ -46,6 +44,7 @@ public class DeBagJob  implements  Job {
 		File dir = new File(rootPath);
 		File[] files = dir.listFiles();
 		for (File f : files) {
+			//todo need to check mysql browser_faild  hostid
 			if (!(f.getName().matches(".*.zip"))) {
 				for (File ff : f.listFiles()) {
 					int num = 10; //初始线程数
@@ -196,7 +195,7 @@ public class DeBagJob  implements  Job {
 //				System.out.println(threadName + "处理了" + kList.size() + "条！startIndex:" + startIndex + "|endIndex:" + endIndex);
 				for (HistoryKeyResult result : kList) {
 					Browser_keyword browser_keyword = new Browser_keyword();
-					browser_keyword.setKey(result.getKey());
+					browser_keyword.setKeyword(result.getKey());
 					browser_keyword.setHostid(hostid);
 					browserKeywordService.insert(browser_keyword);
 				}

