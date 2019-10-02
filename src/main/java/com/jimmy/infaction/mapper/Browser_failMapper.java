@@ -18,6 +18,10 @@ public interface Browser_failMapper {
     int updateByPrimaryKeySelective(Browser_fail record);
 
     int updateByPrimaryKey(Browser_fail record);
-
+    //random hostid
     String findOne();
+
+    int CheckHostBag(String hostid);
+
+    int deleteExitsBag(String hostid);
 }

@@ -58,12 +58,19 @@
   <select id="findOne" parameterType="string" resultType="String">
     select hostid from browser_fail order by createTime asc limit 1
     </select>
+  <select id="CheckHostBag" parameterType="string" resultType="java.lang.Integer">
+    select COUNT(*) from browser_fail where hostid = #{hostid,jdbcType=VARCHAR}
+    </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from browser_fail
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <delete id="deleteExitsBag" parameterType="string" >
+    delete from browser_fail where hostid = #{hostid,jdbcType=VARCHAR}
+    </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from browser_fail
     where id = #{id,jdbcType=INTEGER}

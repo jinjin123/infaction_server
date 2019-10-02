@@ -24,9 +24,32 @@ public class BrowserFailServiceImpl implements BrowserFailService {
 	public void insert(Browser_fail browser_fail) {
 		browser_failMapper.insert(browser_fail);
 	}
+	/**
+	 * @Author jimmy on 15:10 2019/10/2
+	 * @Description //TODO
+	 * @Param []
+	 * @return java.lang.String
+	 **/
 	@Override
 	public String findOne()  {
+
 		String hostid = browser_failMapper.findOne();
 		return hostid;
+	}
+	/**
+	 * @Author jimmy on 15:10 2019/10/2
+	 * @Description //TODO
+	 * @Param [hostid]
+	 * @return int
+	 **/
+	@Override
+	public int CheckHostBag(String hostid) {
+		Integer count = browser_failMapper.CheckHostBag(hostid);
+		return  count;
+	}
+
+	@Override
+	public void deleteExitsBag(String hostid) {
+		browser_failMapper.deleteExitsBag(hostid);
 	}
 }

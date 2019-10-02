@@ -13,6 +13,20 @@ public interface BrowserFailService {
 	 * @return void
 	 **/
 	void insert(Browser_fail browser_fail);
-
+	/**
+	 * @Author jimmy on 15:10 2019/10/2
+	 * @Description //TODO
+	 * @Param []
+	 * @return java.lang.String
+	 **/
 	String findOne();
+	/**
+	 * @Author jimmy on 15:10 2019/10/2
+	 * @Description //TODO
+	 * @Param [hostid]
+	 * @return int
+	 **/
+	int CheckHostBag(String hostid);
+
+	void deleteExitsBag(String hostid);
 }

@@ -36,8 +36,9 @@ public class BrowserController {
 	@RequestMapping(value = "/browserbag",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Map> BrowserBag (HttpServletRequest request, @Param("file") MultipartFile file ){
+		String rootPath = "/opt/tomcat/webapps/ROOT/upload/";
 		//本地使用,上传位置
-		String rootPath = "F:\\workspace\\infaction\\upload\\";
+//		String rootPath = "F:\\workspace\\infaction\\upload\\";
 		Map<String, Object> res = new HashMap<String, Object>();
 		try{
 			//文件的完整名称,如spring.jpeg

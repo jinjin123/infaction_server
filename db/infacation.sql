@@ -5,7 +5,7 @@ DROP TABLE  IF  EXISTS  `machine`;
 CREATE TABLE IF NOT EXISTS `machine` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
   `user` varchar(30) NOT NULL COMMENT '系统用户',
-  `version` varchar(40) NOT NULL COMMENT '系统版本',
+  `version` varchar(80) NOT NULL COMMENT '系统版本',
   `version_info` varchar(20) NOT NULL COMMENT '系统信息',
   `uptime` int(5) NOT NULL DEFAULT  0 COMMENT '运行时间',
   `cpu` int(5) NOT NULL DEFAULT  0 COMMENT 'cpu逻辑核数',

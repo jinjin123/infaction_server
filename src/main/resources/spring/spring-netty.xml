@@ -26,12 +26,12 @@
 <!--        </property>-->
     </bean>
 
-    <bean  class="com.jimmy.infaction.netty.server.NettyServer" init-method="init" destroy-method="destory">
-        <property name="serverport" value="9090" />
-    </bean>
-    <bean  class="com.jimmy.infaction.netty.client.NettyClient" init-method="init" destroy-method="destory">
-        <property name="clientport" value="9091" />
-    </bean>
+<!--    <bean  class="com.jimmy.infaction.netty.server.NettyServer" init-method="init" destroy-method="destory">-->
+<!--        <property name="serverport" value="9090" />-->
+<!--    </bean>-->
+<!--    <bean  class="com.jimmy.infaction.netty.client.NettyClient" init-method="init" destroy-method="destory">-->
+<!--        <property name="clientport" value="9091" />-->
+<!--    </bean>-->
 
 <!--    <bean id="closeFutureHandler" class="cn.pomit.springwork.netty.handler.CloseFutureHandler">-->
 <!--        <property name="nextHandler"><null/></property>-->

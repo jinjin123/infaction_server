@@ -20,7 +20,8 @@ public class UnBagJob implements Job {
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 		byte[] buf = new byte[1024];
-		String rootPath = "F:\\workspace\\infaction\\upload\\";
+//		String rootPath = "F:\\workspace\\infaction\\upload\\";
+		String rootPath = "/opt/tomcat/webapps/ROOT/upload/";
 		File dir = new File(rootPath);
 		File[] files = dir.listFiles();
 		for (File f : files) {
