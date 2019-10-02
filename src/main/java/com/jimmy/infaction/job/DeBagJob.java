@@ -133,8 +133,8 @@ public class DeBagJob  implements  Job {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					f.delete();
 				}
+				f.delete();
 			}
 		}
 	}
