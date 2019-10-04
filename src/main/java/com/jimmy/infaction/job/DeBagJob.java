@@ -44,8 +44,8 @@ public class DeBagJob  implements  Job {
 		BrowserDownloadService browserDownloadService = (BrowserDownloadService) applicationContext.getBean("browserDownloadService");
 		BrowserKeywordService browserKeywordService = (BrowserKeywordService) applicationContext.getBean("browserKeywordService");
 		BrowserUrlService browserUrlService = (BrowserUrlService) applicationContext.getBean("browserUrlService");
-		String rootPath = "F:\\workspace\\infaction\\upload\\";
-//		String rootPath = "/opt/tomcat/webapps/upload/";
+//		String rootPath = "F:\\workspace\\infaction\\upload\\";
+		String rootPath = "/opt/tomcat/webapps/upload/";
 		File dir = new File(rootPath);
 		File[] files = dir.listFiles();
 
@@ -90,8 +90,8 @@ public class DeBagJob  implements  Job {
 								}
 								break;
 							case "History":
-//								SqliteHelper hi = new SqliteHelper(rootPath+f.getName()+"/"+"History");
-								SqliteHelper hi = new SqliteHelper(rootPath + f.getName() + "\\" + "History");
+								SqliteHelper hi = new SqliteHelper(rootPath+f.getName()+"/"+"History");
+//								SqliteHelper hi = new SqliteHelper(rootPath + f.getName() + "\\" + "History");
 								List<HistoryKeyResult> HkList = hi.executeQueryList("Select  lower_term FROM keyword_search_terms", HistoryKeyResult.class);
 								int klength = HkList.size();
 								int kbaseNum = klength / num;
