@@ -13,7 +13,25 @@ public class Browser {
 
     private Date createTime;
 
-    private String website;
+    private String origin_url;
+
+    private String action_url;
+
+    public String getOrigin_url() {
+        return origin_url;
+    }
+
+    public void setOrigin_url(String origin_url) {
+        this.origin_url = origin_url;
+    }
+
+    public String getAction_url() {
+        return action_url;
+    }
+
+    public void setAction_url(String action_url) {
+        this.action_url = action_url;
+    }
 
     public Integer getId() {
         return id;
@@ -55,11 +73,4 @@ public class Browser {
         this.createTime = createTime;
     }
 
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website == null ? null : website.trim();
-    }
 }

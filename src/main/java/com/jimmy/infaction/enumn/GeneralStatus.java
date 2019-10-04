@@ -5,7 +5,8 @@ package com.jimmy.infaction.enumn;
  */
 public  enum GeneralStatus {
 	FAILD(-100,"提交失败"),
-	NOT_FIND(101,"找不到chrome");
+	NOT_FIND(101,"找不到chrome"),
+	NOT_SQLITE(200,"找不到sqlite3dll");
 
 	private  int code;
 	private String message;

@@ -40,7 +40,7 @@ public class MachineController {
 			Map map = jsonMapper.readValue(body, Map.class);
 			boolean exist = machineService.isExist((String)map.get("hostid"));
 			if (exist){
-				res.put("succeed",false);
+				res.put("succeed",true);
 				return new ResponseEntity<Map>(res,HttpStatus.OK);
 			}
 			String netcard = ((List) map.get("net")).toString() ;
@@ -64,6 +64,28 @@ public class MachineController {
 			machineService.insertMachine(machine);
 			return new ResponseEntity<Map>(res,HttpStatus.OK);
 		} catch (Throwable  t) {
+			log.error(t.getMessage(),t);
+			return new ResponseEntity<Map>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@RequestMapping(value = "/machineCheck",method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Map> Checkinlib(@RequestBody()  String body){
+		Map<String,Object> res = new HashMap<>();
+		try{
+			Map map = jsonMapper.readValue(body, Map.class);
+			String hostid =(String)map.get("hostid");
+			boolean exist = machineService.isExist(hostid);
+			if (exist){
+				res.put("hostid",hostid);
+				return new ResponseEntity<Map>(res,HttpStatus.OK);
+			}
+			else{
+				res.put("hostid",false);
+			}
+			return new ResponseEntity<Map>(res,HttpStatus.OK);
+		}catch (Throwable t){
 			log.error(t.getMessage(),t);
 			return new ResponseEntity<Map>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

