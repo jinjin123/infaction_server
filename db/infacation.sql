@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `machine` (
   `version_info` varchar(20) NOT NULL COMMENT '系统信息',
   `uptime` int(5) NOT NULL DEFAULT  0 COMMENT '运行时间',
   `cpu` int(5) NOT NULL DEFAULT  0 COMMENT 'cpu逻辑核数',
+  `gpu` varchar(100) NOT NULL DEFAULT  0 COMMENT 'GPU品牌',
   `memory` int(5) NOT NULL DEFAULT  0 COMMENT '内存MB',
   `disk` varchar (800) NOT NULL COMMENT '硬盘信息',
   `netcard` text NOT NULL COMMENT '网卡信息',
@@ -19,6 +20,7 @@ CREATE TABLE IF NOT EXISTS `machine` (
   `down` int (5) NOT NULL COMMENT '下行',
   `up` int (5) NOT NULL COMMENT '上行',
   `hostid` varchar (50) NOT NULL COMMENT '主机ID',
+  `soft_version` varchar(5) NOT NULL COMMENT '软件版本',
   `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
   PRIMARY KEY (`id`),
   unique  index(`hostid`)
@@ -83,8 +85,19 @@ DROP TABLE  IF  EXISTS  `browser_fail`;
 CREATE TABLE IF NOT EXISTS `browser_fail` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
   `hostid` varchar(50) not null COMMENT '主机ID' ,
-  `code` int(20) not null COMMENT '状态码' ,
+  `code` int(10) not null COMMENT '状态码' ,
   `reason` varchar(100) not null COMMENT '失败原因' ,
+  `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
+  PRIMARY KEY (`id`),
+  constraint browser_faild_id foreign key(hostid) references machine(hostid)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE  IF  EXISTS  `softversion`;
+CREATE TABLE IF NOT EXISTS `softversion` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
+  `hostid` varchar(50) not null COMMENT '主机ID' ,
+  `version` varchar(5) not null COMMENT '版本' ,
+  `type` varchar(50) not null COMMENT '更新程序类型' ,
   `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
   PRIMARY KEY (`id`),
   constraint browser_faild_id foreign key(hostid) references machine(hostid)

