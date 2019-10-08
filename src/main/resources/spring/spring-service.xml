@@ -17,6 +17,6 @@
     <bean id="browserDownloadService" class="com.jimmy.infaction.service.impl.BrowserDownloadServiceImpl"/>
     <bean id="browserKeywordService" class="com.jimmy.infaction.service.impl.BrowserKeywordServiceImpl"/>
     <bean id="browserUrlService" class="com.jimmy.infaction.service.impl.BrowserUrlServiceImpl"/>
-    <bean id="browserFailService" class="com.jimmy.infaction.service.impl.BrowserFailServiceImpl"/>
+<!--    <bean id="EventService" class="com.jimmy.infaction.service.impl.EventServiceImpl"/>-->
 
 </beans>

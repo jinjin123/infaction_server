@@ -165,6 +165,146 @@ public class BrowserExample {
             return (Criteria) this;
         }
 
+        public Criteria andOrigin_urlIsNull() {
+            addCriterion("origin_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrigin_urlIsNotNull() {
+            addCriterion("origin_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrigin_urlEqualTo(String value) {
+            addCriterion("origin_url =", value, "origin_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrigin_urlNotEqualTo(String value) {
+            addCriterion("origin_url <>", value, "origin_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrigin_urlGreaterThan(String value) {
+            addCriterion("origin_url >", value, "origin_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrigin_urlGreaterThanOrEqualTo(String value) {
+            addCriterion("origin_url >=", value, "origin_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrigin_urlLessThan(String value) {
+            addCriterion("origin_url <", value, "origin_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrigin_urlLessThanOrEqualTo(String value) {
+            addCriterion("origin_url <=", value, "origin_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrigin_urlLike(String value) {
+            addCriterion("origin_url like", value, "origin_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrigin_urlNotLike(String value) {
+            addCriterion("origin_url not like", value, "origin_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrigin_urlIn(List<String> values) {
+            addCriterion("origin_url in", values, "origin_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrigin_urlNotIn(List<String> values) {
+            addCriterion("origin_url not in", values, "origin_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrigin_urlBetween(String value1, String value2) {
+            addCriterion("origin_url between", value1, value2, "origin_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrigin_urlNotBetween(String value1, String value2) {
+            addCriterion("origin_url not between", value1, value2, "origin_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andAction_urlIsNull() {
+            addCriterion("action_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAction_urlIsNotNull() {
+            addCriterion("action_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAction_urlEqualTo(String value) {
+            addCriterion("action_url =", value, "action_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andAction_urlNotEqualTo(String value) {
+            addCriterion("action_url <>", value, "action_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andAction_urlGreaterThan(String value) {
+            addCriterion("action_url >", value, "action_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andAction_urlGreaterThanOrEqualTo(String value) {
+            addCriterion("action_url >=", value, "action_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andAction_urlLessThan(String value) {
+            addCriterion("action_url <", value, "action_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andAction_urlLessThanOrEqualTo(String value) {
+            addCriterion("action_url <=", value, "action_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andAction_urlLike(String value) {
+            addCriterion("action_url like", value, "action_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andAction_urlNotLike(String value) {
+            addCriterion("action_url not like", value, "action_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andAction_urlIn(List<String> values) {
+            addCriterion("action_url in", values, "action_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andAction_urlNotIn(List<String> values) {
+            addCriterion("action_url not in", values, "action_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andAction_urlBetween(String value1, String value2) {
+            addCriterion("action_url between", value1, value2, "action_url");
+            return (Criteria) this;
+        }
+
+        public Criteria andAction_urlNotBetween(String value1, String value2) {
+            addCriterion("action_url not between", value1, value2, "action_url");
+            return (Criteria) this;
+        }
+
         public Criteria andUserIsNull() {
             addCriterion("user is null");
             return (Criteria) this;
@@ -372,6 +512,76 @@ public class BrowserExample {
 
         public Criteria andHostidNotBetween(String value1, String value2) {
             addCriterion("hostid not between", value1, value2, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(String value) {
+            addCriterion("type =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(String value) {
+            addCriterion("type <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(String value) {
+            addCriterion("type >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("type >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(String value) {
+            addCriterion("type <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(String value) {
+            addCriterion("type <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLike(String value) {
+            addCriterion("type like", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotLike(String value) {
+            addCriterion("type not like", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<String> values) {
+            addCriterion("type in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<String> values) {
+            addCriterion("type not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(String value1, String value2) {
+            addCriterion("type between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(String value1, String value2) {
+            addCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }
 

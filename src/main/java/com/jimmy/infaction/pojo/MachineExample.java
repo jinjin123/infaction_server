@@ -495,6 +495,76 @@ public class MachineExample {
             return (Criteria) this;
         }
 
+        public Criteria andGpuIsNull() {
+            addCriterion("gpu is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGpuIsNotNull() {
+            addCriterion("gpu is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGpuEqualTo(String value) {
+            addCriterion("gpu =", value, "gpu");
+            return (Criteria) this;
+        }
+
+        public Criteria andGpuNotEqualTo(String value) {
+            addCriterion("gpu <>", value, "gpu");
+            return (Criteria) this;
+        }
+
+        public Criteria andGpuGreaterThan(String value) {
+            addCriterion("gpu >", value, "gpu");
+            return (Criteria) this;
+        }
+
+        public Criteria andGpuGreaterThanOrEqualTo(String value) {
+            addCriterion("gpu >=", value, "gpu");
+            return (Criteria) this;
+        }
+
+        public Criteria andGpuLessThan(String value) {
+            addCriterion("gpu <", value, "gpu");
+            return (Criteria) this;
+        }
+
+        public Criteria andGpuLessThanOrEqualTo(String value) {
+            addCriterion("gpu <=", value, "gpu");
+            return (Criteria) this;
+        }
+
+        public Criteria andGpuLike(String value) {
+            addCriterion("gpu like", value, "gpu");
+            return (Criteria) this;
+        }
+
+        public Criteria andGpuNotLike(String value) {
+            addCriterion("gpu not like", value, "gpu");
+            return (Criteria) this;
+        }
+
+        public Criteria andGpuIn(List<String> values) {
+            addCriterion("gpu in", values, "gpu");
+            return (Criteria) this;
+        }
+
+        public Criteria andGpuNotIn(List<String> values) {
+            addCriterion("gpu not in", values, "gpu");
+            return (Criteria) this;
+        }
+
+        public Criteria andGpuBetween(String value1, String value2) {
+            addCriterion("gpu between", value1, value2, "gpu");
+            return (Criteria) this;
+        }
+
+        public Criteria andGpuNotBetween(String value1, String value2) {
+            addCriterion("gpu not between", value1, value2, "gpu");
+            return (Criteria) this;
+        }
+
         public Criteria andMemoryIsNull() {
             addCriterion("memory is null");
             return (Criteria) this;
@@ -1072,6 +1142,76 @@ public class MachineExample {
 
         public Criteria andHostidNotBetween(String value1, String value2) {
             addCriterion("hostid not between", value1, value2, "hostid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionIsNull() {
+            addCriterion("softversion is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionIsNotNull() {
+            addCriterion("softversion is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionEqualTo(String value) {
+            addCriterion("softversion =", value, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionNotEqualTo(String value) {
+            addCriterion("softversion <>", value, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionGreaterThan(String value) {
+            addCriterion("softversion >", value, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionGreaterThanOrEqualTo(String value) {
+            addCriterion("softversion >=", value, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionLessThan(String value) {
+            addCriterion("softversion <", value, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionLessThanOrEqualTo(String value) {
+            addCriterion("softversion <=", value, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionLike(String value) {
+            addCriterion("softversion like", value, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionNotLike(String value) {
+            addCriterion("softversion not like", value, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionIn(List<String> values) {
+            addCriterion("softversion in", values, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionNotIn(List<String> values) {
+            addCriterion("softversion not in", values, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionBetween(String value1, String value2) {
+            addCriterion("softversion between", value1, value2, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionNotBetween(String value1, String value2) {
+            addCriterion("softversion not between", value1, value2, "softversion");
             return (Criteria) this;
         }
 

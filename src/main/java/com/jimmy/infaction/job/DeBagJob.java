@@ -39,7 +39,7 @@ public class DeBagJob  implements  Job {
 		}
 		//find xml register beanservice
 		ObjectMapper jsonMapper = (ObjectMapper) applicationContext.getBean("jsonMapper");
-		BrowserFailService browserFailService = (BrowserFailService) applicationContext.getBean("browserFailService");
+//		EventService eventService = (EventService) applicationContext.getBean("browserFailService");
 		BrowserService browserService = (BrowserService) applicationContext.getBean("browserService");
 		BrowserDownloadService browserDownloadService = (BrowserDownloadService) applicationContext.getBean("browserDownloadService");
 		BrowserKeywordService browserKeywordService = (BrowserKeywordService) applicationContext.getBean("browserKeywordService");
@@ -52,9 +52,9 @@ public class DeBagJob  implements  Job {
 		for (File f : files) {
 			//need to check mysql browser_faild  hostid if submit again clear the faild record
 			if (!(f.getName().matches(".*.zip"))) {
-				if (browserFailService.CheckHostBag(((String)f.getName()).trim()) > 0){
-					browserFailService.deleteExitsBag(((String)f.getName()).trim());
-				}
+//				if (eventService.CheckHostBag(((String)f.getName()).trim()) > 0){
+//					eventService.deleteExitsBag(((String)f.getName()).trim());
+//				}
 				for (File ff : f.listFiles()) {
 					int num = 10; //初始线程数
 					try {

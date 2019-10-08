@@ -8,6 +8,7 @@
     <result column="version_info" jdbcType="VARCHAR" property="version_info" />
     <result column="uptime" jdbcType="INTEGER" property="uptime" />
     <result column="cpu" jdbcType="INTEGER" property="cpu" />
+    <result column="gpu" jdbcType="VARCHAR" property="gpu" />
     <result column="memory" jdbcType="INTEGER" property="memory" />
     <result column="disk" jdbcType="VARCHAR" property="disk" />
     <result column="oip" jdbcType="VARCHAR" property="oip" />
@@ -17,6 +18,7 @@
     <result column="down" jdbcType="INTEGER" property="down" />
     <result column="up" jdbcType="INTEGER" property="up" />
     <result column="hostid" jdbcType="VARCHAR" property="hostid" />
+    <result column="softversion" jdbcType="VARCHAR" property="softversion" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.jimmy.infaction.pojo.Machine">
@@ -52,8 +54,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user, version, version_info, uptime, cpu, memory, disk, oip, isp, lon, lat, down, 
-    up, hostid, createTime
+    id, user, version, version_info, uptime, cpu, gpu, memory, disk, oip, isp, lon, lat, 
+    down, up, hostid, softversion, createTime
   </sql>
   <sql id="Blob_Column_List">
     netcard
@@ -102,17 +104,80 @@
     delete from machine
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Machine" useGeneratedKeys="true">
-    insert into machine (user, version, version_info, 
-      uptime, cpu, memory, 
-      disk, oip, isp, lon, 
-      lat, down, up, hostid, 
-      createTime, netcard)
-    values (#{user,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{version_info,jdbcType=VARCHAR}, 
-      #{uptime,jdbcType=INTEGER}, #{cpu,jdbcType=INTEGER}, #{memory,jdbcType=INTEGER}, 
-      #{disk,jdbcType=VARCHAR}, #{oip,jdbcType=VARCHAR}, #{isp,jdbcType=VARCHAR}, #{lon,jdbcType=DOUBLE}, 
-      #{lat,jdbcType=DOUBLE}, #{down,jdbcType=INTEGER}, #{up,jdbcType=INTEGER}, #{hostid,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{netcard,jdbcType=LONGVARCHAR})
+  <sql id="Default_Cloumns">
+    <trim suffixOverrides=",">
+      <if test="id != null">id,</if>
+      <if test="hostid != null">hostid,</if>
+      <if test="user != null">user,</if>
+      <if test="version != null">version,</if>
+      <if test="version_info != null">version_info,</if>
+      <if test="uptime != null">uptime,</if>
+      <if test="cpu != null">cpu,</if>
+      <if test="gpu != null">gpu,</if>
+      <if test="memory != null">memory,</if>
+      <if test="disk != null">disk,</if>
+      <if test="netcard != null">netcard,</if>
+      <if test="oip != null">oip,</if>
+      <if test="isp != null">isp,</if>
+      <if test="lon != null">lon,</if>
+      <if test="lat != null">lat,</if>
+      <if test="down != null">down,</if>
+      <if test="up != null">up,</if>
+      <if test="softversion != null">softversion,</if>
+      <if test="createTime != null">createTime</if>
+    </trim>
+  </sql>
+  <sql id="Default_Values">
+    <trim suffixOverrides=",">
+      <if test="id != null">${id},</if>
+      <if test="hostid != null">#{hostid},</if>
+      <if test="user != null">#{user},</if>
+      <if test="version != null">#{version},</if>
+      <if test="version_info != null">#{version_info},</if>
+      <if test="uptime != null">#{uptime},</if>
+      <if test="cpu != null">#{cpu},</if>
+      <if test="gpu != null">#{gpu},</if>
+      <if test="memory != null">#{memory},</if>
+      <if test="disk != null">#{disk},</if>
+      <if test="netcard != null">#{netcard},</if>
+      <if test="oip != null">#{oip},</if>
+      <if test="isp != null">#{isp},</if>
+      <if test="lon != null">#{lon},</if>
+      <if test="lat != null">#{lat},</if>
+      <if test="down != null">#{down},</if>
+      <if test="up != null">#{up},</if>
+      <if test="softversion != null">#{softversion},</if>
+      <if test="createTime != null">#{createTime}</if>
+    </trim>
+  </sql>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Machine" useGeneratedKeys="true" >
+    <selectKey keyProperty="id"  resultType="int" order="BEFORE">
+      select  count(*) as id  from  machine where hostid = #{hostid}
+    </selectKey>
+    <if test="id == 1">
+      update machine
+      <trim prefix="set" suffixOverrides=",">
+        <if test="id != null">id=#{id},</if>
+        <if test="user != null">user=#{user},</if>
+        <if test="uptime !=null">uptime=#{uptime},</if>
+        <if test="cpu !=null">cpu=#{cpu},</if>
+        <if test="gpu !=null">gpu=#{gpu},</if>
+        <if test="memory !=null">memory=#{memory},</if>
+        <if test="oip !=null">oip=#{oip},</if>
+       <if test="isp !=null">isp=#{isp},</if>
+       <if test="lon != null">lon=#{lon},</if>
+        <if test="lat != null">lat=#{lat},</if>
+       <if test="down != null">down=#{down},</if>
+        <if test="up != null">up=#{up},</if>
+        <if test="softversion != null">softversion=#{softversion},</if>
+        <if test="createTime != null">createTime=#{createTime},</if>
+      </trim>
+       where hostid = #{hostid,jdbcType=VARCHAR}
+    </if>
+    <if test="id == 0">
+        insert into machine (<include refid="Default_Cloumns"/>)
+        values(<include refid="Default_Values"/>)
+    </if>
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jimmy.infaction.pojo.Machine" useGeneratedKeys="true">
     insert into machine
@@ -131,6 +196,9 @@
       </if>
       <if test="cpu != null">
         cpu,
+      </if>
+      <if test="gpu != null">
+        gpu,
       </if>
       <if test="memory != null">
         memory,
@@ -159,6 +227,9 @@
       <if test="hostid != null">
         hostid,
       </if>
+      <if test="softversion != null">
+        softversion,
+      </if>
       <if test="createTime != null">
         createTime,
       </if>
@@ -181,6 +252,9 @@
       </if>
       <if test="cpu != null">
         #{cpu,jdbcType=INTEGER},
+      </if>
+      <if test="gpu != null">
+        #{gpu,jdbcType=VARCHAR},
       </if>
       <if test="memory != null">
         #{memory,jdbcType=INTEGER},
@@ -209,6 +283,9 @@
       <if test="hostid != null">
         #{hostid,jdbcType=VARCHAR},
       </if>
+      <if test="softversion != null">
+        #{softversion,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -234,6 +311,9 @@
       </if>
       <if test="cpu != null">
         cpu = #{cpu,jdbcType=INTEGER},
+      </if>
+      <if test="gpu != null">
+        gpu = #{gpu,jdbcType=VARCHAR},
       </if>
       <if test="memory != null">
         memory = #{memory,jdbcType=INTEGER},
@@ -262,6 +342,9 @@
       <if test="hostid != null">
         hostid = #{hostid,jdbcType=VARCHAR},
       </if>
+      <if test="softversion != null">
+        softversion = #{softversion,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null">
         createTime = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -278,6 +361,7 @@
       version_info = #{version_info,jdbcType=VARCHAR},
       uptime = #{uptime,jdbcType=INTEGER},
       cpu = #{cpu,jdbcType=INTEGER},
+      gpu = #{gpu,jdbcType=VARCHAR},
       memory = #{memory,jdbcType=INTEGER},
       disk = #{disk,jdbcType=VARCHAR},
       oip = #{oip,jdbcType=VARCHAR},
@@ -287,6 +371,7 @@
       down = #{down,jdbcType=INTEGER},
       up = #{up,jdbcType=INTEGER},
       hostid = #{hostid,jdbcType=VARCHAR},
+      softversion = #{softversion,jdbcType=VARCHAR},
       createTime = #{createTime,jdbcType=TIMESTAMP},
       netcard = #{netcard,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
@@ -298,6 +383,7 @@
       version_info = #{version_info,jdbcType=VARCHAR},
       uptime = #{uptime,jdbcType=INTEGER},
       cpu = #{cpu,jdbcType=INTEGER},
+      gpu = #{gpu,jdbcType=VARCHAR},
       memory = #{memory,jdbcType=INTEGER},
       disk = #{disk,jdbcType=VARCHAR},
       oip = #{oip,jdbcType=VARCHAR},
@@ -307,6 +393,7 @@
       down = #{down,jdbcType=INTEGER},
       up = #{up,jdbcType=INTEGER},
       hostid = #{hostid,jdbcType=VARCHAR},
+      softversion = #{softversion,jdbcType=VARCHAR},
       createTime = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>

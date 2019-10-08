@@ -2,23 +2,22 @@ package com.jimmy.infaction.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jimmy.infaction.enumn.GeneralStatus;
-import com.jimmy.infaction.pojo.Browser;
-import com.jimmy.infaction.pojo.Browser_fail;
-import com.jimmy.infaction.service.BrowserFailService;
+import com.jimmy.infaction.pojo.Event;
+import com.jimmy.infaction.service.EventService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +31,7 @@ public class BrowserController {
 	@Autowired
 	private ObjectMapper jsonMapper;
 	@Autowired
-	private BrowserFailService browserFailService;
+	private EventService eventService;
 	@RequestMapping(value = "/browserbag",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Map> BrowserBag (HttpServletRequest request, @Param("file") MultipartFile file ){
@@ -88,12 +87,13 @@ public class BrowserController {
 		}
 	}
 
-	@RequestMapping(value = "/browser_fail",method = RequestMethod.POST)
+	@RequestMapping(value = "/Event",method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Map> BrowserFaild(Browser_fail browser_fail){
+	public ResponseEntity<Map> BrowserFaild(Event event){
 		try{
-			browser_fail.setReason(GeneralStatus.getMessage(browser_fail.getCode()));
-			browserFailService.insert(browser_fail);
+			event.setReason(GeneralStatus.getMessage(event.getCode()));
+			event.setType(GeneralStatus.getMessage((Integer.parseInt((event.getType())))));
+			eventService.insert(event);
 			return  new ResponseEntity<Map>(HttpStatus.OK);
 		}catch (Throwable t){
 			log.error(t.getMessage(),t);
@@ -106,7 +106,7 @@ public class BrowserController {
 	public ResponseEntity<Map> Tunnel() {
 		Map<String,Object> res = new HashMap<>();
 		try{
-			String hostid = browserFailService.findOne();
+			String hostid = eventService.findOne();
 			res.put("hostid",hostid);
 			return new ResponseEntity<Map>(res,HttpStatus.OK);
 		}catch (Throwable t){

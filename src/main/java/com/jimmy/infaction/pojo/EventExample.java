@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Browser_failExample {
+public class EventExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public Browser_failExample() {
+    public EventExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -292,6 +292,146 @@ public class Browser_failExample {
 
         public Criteria andCodeNotBetween(Integer value1, Integer value2) {
             addCriterion("code not between", value1, value2, "code");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionIsNull() {
+            addCriterion("softversion is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionIsNotNull() {
+            addCriterion("softversion is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionEqualTo(String value) {
+            addCriterion("softversion =", value, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionNotEqualTo(String value) {
+            addCriterion("softversion <>", value, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionGreaterThan(String value) {
+            addCriterion("softversion >", value, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionGreaterThanOrEqualTo(String value) {
+            addCriterion("softversion >=", value, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionLessThan(String value) {
+            addCriterion("softversion <", value, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionLessThanOrEqualTo(String value) {
+            addCriterion("softversion <=", value, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionLike(String value) {
+            addCriterion("softversion like", value, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionNotLike(String value) {
+            addCriterion("softversion not like", value, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionIn(List<String> values) {
+            addCriterion("softversion in", values, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionNotIn(List<String> values) {
+            addCriterion("softversion not in", values, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionBetween(String value1, String value2) {
+            addCriterion("softversion between", value1, value2, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoftversionNotBetween(String value1, String value2) {
+            addCriterion("softversion not between", value1, value2, "softversion");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(String value) {
+            addCriterion("type =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(String value) {
+            addCriterion("type <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(String value) {
+            addCriterion("type >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("type >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(String value) {
+            addCriterion("type <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(String value) {
+            addCriterion("type <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLike(String value) {
+            addCriterion("type like", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotLike(String value) {
+            addCriterion("type not like", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<String> values) {
+            addCriterion("type in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<String> values) {
+            addCriterion("type not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(String value1, String value2) {
+            addCriterion("type between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(String value1, String value2) {
+            addCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }
 

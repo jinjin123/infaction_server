@@ -2,12 +2,16 @@ package com.jimmy.infaction.pojo;
 
 import java.util.Date;
 
-public class Browser_fail {
+public class Event {
     private Integer id;
 
     private String hostid;
 
     private Integer code;
+
+    private String softversion;
+
+    private String type;
 
     private String reason;
 
@@ -35,6 +39,22 @@ public class Browser_fail {
 
     public void setCode(Integer code) {
         this.code = code;
+    }
+
+    public String getSoftversion() {
+        return softversion;
+    }
+
+    public void setSoftversion(String softversion) {
+        this.softversion = softversion == null ? null : softversion.trim();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 
     public String getReason() {

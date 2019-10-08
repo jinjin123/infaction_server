@@ -15,6 +15,8 @@ public class Machine {
 
     private Integer cpu;
 
+    private String gpu;
+
     private Integer memory;
 
     private String disk;
@@ -32,6 +34,8 @@ public class Machine {
     private Integer up;
 
     private String hostid;
+
+    private String softversion;
 
     private Date createTime;
 
@@ -83,6 +87,14 @@ public class Machine {
 
     public void setCpu(Integer cpu) {
         this.cpu = cpu;
+    }
+
+    public String getGpu() {
+        return gpu;
+    }
+
+    public void setGpu(String gpu) {
+        this.gpu = gpu == null ? null : gpu.trim();
     }
 
     public Integer getMemory() {
@@ -155,6 +167,14 @@ public class Machine {
 
     public void setHostid(String hostid) {
         this.hostid = hostid == null ? null : hostid.trim();
+    }
+
+    public String getSoftversion() {
+        return softversion;
+    }
+
+    public void setSoftversion(String softversion) {
+        this.softversion = softversion == null ? null : softversion.trim();
     }
 
     public Date getCreateTime() {

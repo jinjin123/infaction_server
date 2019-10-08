@@ -46,7 +46,7 @@ public class MachineServiceImpl implements MachineService {
 	 **/
 	@Override
 	public void insertMachine(Machine machine) {
-		machineMapper.insert(machine);
+		 machineMapper.insert(machine);
 	}
 
 	/**

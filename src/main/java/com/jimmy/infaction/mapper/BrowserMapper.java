@@ -11,15 +11,11 @@ public interface BrowserMapper {
 
     int insertSelective(Browser record);
 
-    List<Browser> selectByExampleWithBLOBs(BrowserExample example);
-
     List<Browser> selectByExample(BrowserExample example);
 
     Browser selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(Browser record);
-
-    int updateByPrimaryKeyWithBLOBs(Browser record);
 
     int updateByPrimaryKey(Browser record);
 }

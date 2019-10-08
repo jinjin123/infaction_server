@@ -12,7 +12,7 @@
     </commentGenerator>
 
     <!-- 数据库连接信息：驱动类、连接地址、用户名、密码 -->
-    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://111.231.82.173:3306/infaction"
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://192.168.50.100:3307/infaction"
                     userId="root" password="zxc123">
 
     </jdbcConnection>
@@ -85,6 +85,13 @@
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
         <table tableName="keyboard" domainObjectName="Keyboard" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true"
+               selectByExampleQueryId="false">
+            <property name="my.isgen.usekeys" value="true"/>
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+        <table tableName="event" domainObjectName="Event" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true"
                selectByExampleQueryId="false">
             <property name="my.isgen.usekeys" value="true"/>

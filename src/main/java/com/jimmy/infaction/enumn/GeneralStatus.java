@@ -4,13 +4,22 @@ package com.jimmy.infaction.enumn;
  * @author jimmy on 2019/9/30 7:45
  */
 public  enum GeneralStatus {
-	FAILD(-100,"提交失败"),
+	FAILD(-100,"提交包失败"),
+	DW_CHROME(99,"解码chrome失败"),
+	SUCCESS(100,"提交chrome包成功"),
 	NOT_FIND(101,"找不到chrome"),
+	UPDATE_DOG_SUCCESS(102,"更新狗成功"),
+	FAV_BRO_SUCCESS(103,"tasklist解码成功"),
+	FAV_BRO_FAILD(104,"tasklist解码失败"),
+	NOT_SQLITE(200,"找不到sqlite3dll"),
 	NOT_MAIN_UPDATE(300,"更新主程序失败"),
-	NOT_DOG_UPDATE(301,"更新后门失败"),
+	NOT_DOG_UPDATE(301,"更新狗失败"),
 	NOT_MAIN_DAEMON_UPDATE(302,"更新主程序守护程序失败"),
 	NOT_DOG_DAEMON_UPDATE(303,"更新后门守护程序失败"),
-	NOT_SQLITE(200,"找不到sqlite3dll");
+	MAIN_PROCESS(0,"主程序"),
+	DOG_PROCESS(1,"看门狗"),
+	MAIN_DAEMON(2,"主守护"),
+	DOG_DAEMON(3,"狗守护");
 
 	private  int code;
 	private String message;

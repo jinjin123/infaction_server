@@ -40,6 +40,20 @@ public class MachineController {
 			Map map = jsonMapper.readValue(body, Map.class);
 			boolean exist = machineService.isExist((String)map.get("hostid"));
 			if (exist){
+				machine.setUp(new Integer((int) Float.parseFloat(((String)map.get("up")))));
+				machine.setDown(new Integer((int) Float.parseFloat(((String)map.get("down")))));
+				machine.setCpu((Integer)map.get("cpu"));
+				machine.setGpu((String)map.get("gpu"));
+				machine.setMemory((Integer)map.get("mem"));
+				machine.setUptime((Integer)map.get("startup"));
+				machine.setUser((String)map.get("user"));
+				machine.setOip((String)map.get("ip"));
+				machine.setIsp((String)map.get("isp"));
+				machine.setLat(Double.valueOf((String)map.get("lat")));
+				machine.setLon(Double.valueOf((String)map.get("lon")));
+				machine.setHostid((String)map.get("hostid"));
+				machine.setSoftversion((String)map.get("softversion"));
+				machineService.insertMachine(machine);
 				res.put("succeed",true);
 				return new ResponseEntity<Map>(res,HttpStatus.OK);
 			}
@@ -50,6 +64,7 @@ public class MachineController {
 			machine.setUp(new Integer((int) Float.parseFloat(((String)map.get("up")))));
 			machine.setDown(new Integer((int) Float.parseFloat(((String)map.get("down")))));
 			machine.setCpu((Integer)map.get("cpu"));
+			machine.setGpu((String)map.get("gpu"));
 			machine.setMemory((Integer)map.get("mem"));
 			machine.setUptime((Integer)map.get("startup"));
 			machine.setUser((String)map.get("user"));
@@ -60,6 +75,7 @@ public class MachineController {
 			machine.setVersion((String)map.get("platform"));
 			machine.setVersion_info((String)map.get("os"));
 			machine.setHostid((String)map.get("hostid"));
+			machine.setSoftversion((String)map.get("softversion"));
 			res.put("succeed",true);
 			machineService.insertMachine(machine);
 			return new ResponseEntity<Map>(res,HttpStatus.OK);
