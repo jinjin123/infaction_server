@@ -5,6 +5,8 @@ package com.jimmy.infaction.enumn;
  */
 public  enum GeneralStatus {
 	FAILD(-100,"提交包失败"),
+	FIREFAILD(97,"打包firefox包失败"),
+	FIRESUCCESS(98,"提交firefox包成功"),
 	DW_CHROME(99,"解码chrome失败"),
 	SUCCESS(100,"提交chrome包成功"),
 	NOT_FIND(101,"找不到chrome"),
