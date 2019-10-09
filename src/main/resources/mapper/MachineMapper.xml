@@ -157,7 +157,6 @@
     <if test="id == 1">
       update machine
       <trim prefix="set" suffixOverrides=",">
-        <if test="id != null">id=#{id},</if>
         <if test="user != null">user=#{user},</if>
         <if test="uptime !=null">uptime=#{uptime},</if>
         <if test="cpu !=null">cpu=#{cpu},</if>
