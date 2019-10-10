@@ -12,7 +12,7 @@
     </commentGenerator>
 
     <!-- 数据库连接信息：驱动类、连接地址、用户名、密码 -->
-    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://192.168.50.100:3307/infaction"
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://192.168.50.100:3306/infaction"
                     userId="root" password="zxc123">
 
     </jdbcConnection>
@@ -42,13 +42,13 @@
         <!-- enableSubPackages：是否让 schema 作为包的后缀-->
         <property name="enableSubPackages" value="true"/>
     </javaClientGenerator>
-    <table tableName="machine" domainObjectName="Machine" enableCountByExample="false"
-           enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true"
-           selectByExampleQueryId="false">
-        <property name="my.isgen.usekeys" value="true"/>
-        <property name="useActualColumnNames" value="true"/>
-        <generatedKey column="id" sqlStatement="JDBC"/>
-    </table>
+<!--    <table tableName="machine" domainObjectName="Machine" enableCountByExample="false"-->
+<!--           enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true"-->
+<!--           selectByExampleQueryId="false">-->
+<!--        <property name="my.isgen.usekeys" value="true"/>-->
+<!--        <property name="useActualColumnNames" value="true"/>-->
+<!--        <generatedKey column="id" sqlStatement="JDBC"/>-->
+<!--    </table>-->
         <table tableName="browser" domainObjectName="Browser" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true"
                selectByExampleQueryId="false">
@@ -77,26 +77,20 @@
             <property name="useActualColumnNames" value="true"/>
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
-        <table tableName="browser_fail" domainObjectName="Browser_fail" enableCountByExample="false"
-               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true"
-               selectByExampleQueryId="false">
-            <property name="my.isgen.usekeys" value="true"/>
-            <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="id" sqlStatement="JDBC"/>
-        </table>
-        <table tableName="keyboard" domainObjectName="Keyboard" enableCountByExample="false"
-               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true"
-               selectByExampleQueryId="false">
-            <property name="my.isgen.usekeys" value="true"/>
-            <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="id" sqlStatement="JDBC"/>
-        </table>
-        <table tableName="event" domainObjectName="Event" enableCountByExample="false"
-               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true"
-               selectByExampleQueryId="false">
-            <property name="my.isgen.usekeys" value="true"/>
-            <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="id" sqlStatement="JDBC"/>
-        </table>
+
+<!--        <table tableName="keyboard" domainObjectName="Keyboard" enableCountByExample="false"-->
+<!--               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true"-->
+<!--               selectByExampleQueryId="false">-->
+<!--            <property name="my.isgen.usekeys" value="true"/>-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--            <generatedKey column="id" sqlStatement="JDBC"/>-->
+<!--        </table>-->
+<!--        <table tableName="event" domainObjectName="Event" enableCountByExample="false"-->
+<!--               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true"-->
+<!--               selectByExampleQueryId="false">-->
+<!--            <property name="my.isgen.usekeys" value="true"/>-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--            <generatedKey column="id" sqlStatement="JDBC"/>-->
+<!--        </table>-->
     </context>
 </generatorConfiguration>

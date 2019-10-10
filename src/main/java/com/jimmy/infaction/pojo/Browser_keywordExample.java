@@ -235,6 +235,76 @@ public class Browser_keywordExample {
             return (Criteria) this;
         }
 
+        public Criteria andBrwtypeIsNull() {
+            addCriterion("brwtype is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeIsNotNull() {
+            addCriterion("brwtype is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeEqualTo(String value) {
+            addCriterion("brwtype =", value, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeNotEqualTo(String value) {
+            addCriterion("brwtype <>", value, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeGreaterThan(String value) {
+            addCriterion("brwtype >", value, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeGreaterThanOrEqualTo(String value) {
+            addCriterion("brwtype >=", value, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeLessThan(String value) {
+            addCriterion("brwtype <", value, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeLessThanOrEqualTo(String value) {
+            addCriterion("brwtype <=", value, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeLike(String value) {
+            addCriterion("brwtype like", value, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeNotLike(String value) {
+            addCriterion("brwtype not like", value, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeIn(List<String> values) {
+            addCriterion("brwtype in", values, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeNotIn(List<String> values) {
+            addCriterion("brwtype not in", values, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeBetween(String value1, String value2) {
+            addCriterion("brwtype between", value1, value2, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeNotBetween(String value1, String value2) {
+            addCriterion("brwtype not between", value1, value2, "brwtype");
+            return (Criteria) this;
+        }
+
         public Criteria andHostidIsNull() {
             addCriterion("hostid is null");
             return (Criteria) this;

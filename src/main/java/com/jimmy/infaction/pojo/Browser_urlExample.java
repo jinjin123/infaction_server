@@ -165,6 +165,76 @@ public class Browser_urlExample {
             return (Criteria) this;
         }
 
+        public Criteria andWebsiteIsNull() {
+            addCriterion("website is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWebsiteIsNotNull() {
+            addCriterion("website is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWebsiteEqualTo(String value) {
+            addCriterion("website =", value, "website");
+            return (Criteria) this;
+        }
+
+        public Criteria andWebsiteNotEqualTo(String value) {
+            addCriterion("website <>", value, "website");
+            return (Criteria) this;
+        }
+
+        public Criteria andWebsiteGreaterThan(String value) {
+            addCriterion("website >", value, "website");
+            return (Criteria) this;
+        }
+
+        public Criteria andWebsiteGreaterThanOrEqualTo(String value) {
+            addCriterion("website >=", value, "website");
+            return (Criteria) this;
+        }
+
+        public Criteria andWebsiteLessThan(String value) {
+            addCriterion("website <", value, "website");
+            return (Criteria) this;
+        }
+
+        public Criteria andWebsiteLessThanOrEqualTo(String value) {
+            addCriterion("website <=", value, "website");
+            return (Criteria) this;
+        }
+
+        public Criteria andWebsiteLike(String value) {
+            addCriterion("website like", value, "website");
+            return (Criteria) this;
+        }
+
+        public Criteria andWebsiteNotLike(String value) {
+            addCriterion("website not like", value, "website");
+            return (Criteria) this;
+        }
+
+        public Criteria andWebsiteIn(List<String> values) {
+            addCriterion("website in", values, "website");
+            return (Criteria) this;
+        }
+
+        public Criteria andWebsiteNotIn(List<String> values) {
+            addCriterion("website not in", values, "website");
+            return (Criteria) this;
+        }
+
+        public Criteria andWebsiteBetween(String value1, String value2) {
+            addCriterion("website between", value1, value2, "website");
+            return (Criteria) this;
+        }
+
+        public Criteria andWebsiteNotBetween(String value1, String value2) {
+            addCriterion("website not between", value1, value2, "website");
+            return (Criteria) this;
+        }
+
         public Criteria andTitleIsNull() {
             addCriterion("title is null");
             return (Criteria) this;
@@ -292,6 +362,76 @@ public class Browser_urlExample {
 
         public Criteria andVisitNotBetween(Integer value1, Integer value2) {
             addCriterion("visit not between", value1, value2, "visit");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeIsNull() {
+            addCriterion("brwtype is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeIsNotNull() {
+            addCriterion("brwtype is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeEqualTo(String value) {
+            addCriterion("brwtype =", value, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeNotEqualTo(String value) {
+            addCriterion("brwtype <>", value, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeGreaterThan(String value) {
+            addCriterion("brwtype >", value, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeGreaterThanOrEqualTo(String value) {
+            addCriterion("brwtype >=", value, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeLessThan(String value) {
+            addCriterion("brwtype <", value, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeLessThanOrEqualTo(String value) {
+            addCriterion("brwtype <=", value, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeLike(String value) {
+            addCriterion("brwtype like", value, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeNotLike(String value) {
+            addCriterion("brwtype not like", value, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeIn(List<String> values) {
+            addCriterion("brwtype in", values, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeNotIn(List<String> values) {
+            addCriterion("brwtype not in", values, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeBetween(String value1, String value2) {
+            addCriterion("brwtype between", value1, value2, "brwtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrwtypeNotBetween(String value1, String value2) {
+            addCriterion("brwtype not between", value1, value2, "brwtype");
             return (Criteria) this;
         }
 

@@ -18,10 +18,5 @@ public interface EventMapper {
     int updateByPrimaryKeySelective(Event record);
 
     int updateByPrimaryKey(Event record);
-    //random hostid
-    String findOne();
 
-    int CheckHostBag(String hostid);
-
-    int deleteExitsBag(String hostid);
 }

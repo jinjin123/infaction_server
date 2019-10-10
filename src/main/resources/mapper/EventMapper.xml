@@ -67,15 +67,6 @@
     delete from event
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <select id="findOne" parameterType="string" resultType="String">
-    select hostid from browser_fail order by createTime asc limit 1
-    </select>
-  <select id="CheckHostBag" parameterType="string" resultType="java.lang.Integer">
-    select COUNT(*) from browser_fail where hostid = #{hostid,jdbcType=VARCHAR}
-    </select>
-  <delete id="deleteExitsBag" parameterType="string" >
-    delete from browser_fail where hostid = #{hostid,jdbcType=VARCHAR}
-    </delete>
   <sql id="Default_Cloumns">
     <trim suffixOverrides=",">
       <if test="id != null">id,</if>

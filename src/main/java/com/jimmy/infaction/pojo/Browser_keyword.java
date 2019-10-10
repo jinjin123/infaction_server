@@ -7,6 +7,8 @@ public class Browser_keyword {
 
     private String keyword;
 
+    private String brwtype;
+
     private String hostid;
 
     private Date createTime;
@@ -25,6 +27,14 @@ public class Browser_keyword {
 
     public void setKeyword(String keyword) {
         this.keyword = keyword == null ? null : keyword.trim();
+    }
+
+    public String getBrwtype() {
+        return brwtype;
+    }
+
+    public void setBrwtype(String brwtype) {
+        this.brwtype = brwtype == null ? null : brwtype.trim();
     }
 
     public String getHostid() {

@@ -13,4 +13,6 @@ public interface BrowserUrlService {
 	 * @return void
 	 **/
 	void insert(Browser_url browser_url);
+
+	void deleteExit(String hostid,String browserType);
 }

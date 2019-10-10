@@ -36,10 +36,13 @@ public class BrowserController {
 	@ResponseBody
 	public ResponseEntity<Map> BrowserBag (HttpServletRequest request, @Param("file") MultipartFile file ){
 		String rootPath = "/opt/tomcat/webapps/upload/";
+		String imgPath = "/opt/tomcat/webapps/upload/img/";
 		//本地使用,上传位置
 //		String rootPath = "F:\\workspace\\infaction\\upload\\";
+//		String imgPath = "F:\\workspace\\infaction\\upload\\img\\";
 		Map<String, Object> res = new HashMap<String, Object>();
 		try{
+			File descFile = null;
 			//文件的完整名称,如spring.jpeg
 			String filename = file.getOriginalFilename();
 			//文件名,如spring
@@ -50,9 +53,12 @@ public class BrowserController {
 //			Calendar date = Calendar.getInstance();
 //			File dateDirs = new File(date.get(Calendar.YEAR)
 //					+ File.separator + (date.get(Calendar.MONTH)+1));
-
+			if (suffix.equals(".png")){
+				 descFile = new File(imgPath+filename);
+			}else{
+				 descFile = new File(rootPath+filename);
+			}
 			//目标文件
-			File descFile = new File(rootPath+filename);
 			int i = 1;
 			//若文件存在重命名
 			String newFilename = filename;
@@ -102,16 +108,16 @@ public class BrowserController {
 	}
 
 	//  get the hostid to startup reverse shell in agent
-	@RequestMapping(value = "/tunnel",method = RequestMethod.GET)
-	public ResponseEntity<Map> Tunnel() {
-		Map<String,Object> res = new HashMap<>();
-		try{
-			String hostid = eventService.findOne();
-			res.put("hostid",hostid);
-			return new ResponseEntity<Map>(res,HttpStatus.OK);
-		}catch (Throwable t){
-			log.error(t.getMessage(),t);
-			return new ResponseEntity<Map>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+//	@RequestMapping(value = "/tunnel",method = RequestMethod.GET)
+//	public ResponseEntity<Map> Tunnel() {
+//		Map<String,Object> res = new HashMap<>();
+//		try{
+//			String hostid = eventService.findOne();
+//			res.put("hostid",hostid);
+//			return new ResponseEntity<Map>(res,HttpStatus.OK);
+//		}catch (Throwable t){
+//			log.error(t.getMessage(),t);
+//			return new ResponseEntity<Map>(HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//	}
 }

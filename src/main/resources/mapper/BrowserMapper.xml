@@ -8,7 +8,7 @@
     <result column="user" jdbcType="VARCHAR" property="user" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="hostid" jdbcType="VARCHAR" property="hostid" />
-    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="brwtype" jdbcType="VARCHAR" property="brwtype" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -41,7 +41,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, origin_url, action_url, user, password, hostid, type, createTime
+    id, origin_url, action_url, user, password, hostid, brwtype, createTime
   </sql>
   <select id="selectByExample" parameterType="com.jimmy.infaction.pojo.BrowserExample" resultMap="BaseResultMap">
     select
@@ -68,6 +68,9 @@
     delete from browser
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteExit" parameterType="string" >
+      delete from browser where hostid = #{hostid,jdbcType=VARCHAR} and brwtype = #{brwtype,jdbcType=VARCHAR}
+  </delete>
   <sql id="Default_Cloumns">
     <trim suffixOverrides=",">
       <if test="id != null">id,</if>
@@ -76,6 +79,7 @@
       <if test="action_url != null">action_url,</if>
       <if test="user != null">user,</if>
       <if test="password != null">password,</if>
+      <if test="brwtype != null">brwtype,</if>
       <if test="createTime != null">createTime</if>
     </trim>
   </sql>
@@ -87,6 +91,7 @@
       <if test="action_url != null">#{action_url},</if>
       <if test="user != null">#{user},</if>
       <if test="password != null">#{password},</if>
+      <if test="brwtype != null">#{brwtype},</if>
       <if test="createTime != null">#{createTime}</if>
     </trim>
   </sql>
@@ -112,8 +117,8 @@
       <if test="hostid != null">
         hostid,
       </if>
-      <if test="type != null">
-        type,
+      <if test="brwtype != null">
+        brwtype,
       </if>
       <if test="createTime != null">
         createTime,
@@ -135,8 +140,8 @@
       <if test="hostid != null">
         #{hostid,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
-        #{type,jdbcType=VARCHAR},
+      <if test="brwtype != null">
+        #{brwtype,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -161,8 +166,8 @@
       <if test="hostid != null">
         hostid = #{hostid,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
-        type = #{type,jdbcType=VARCHAR},
+      <if test="brwtype != null">
+        brwtype = #{brwtype,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         createTime = #{createTime,jdbcType=TIMESTAMP},
@@ -177,7 +182,7 @@
       user = #{user,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       hostid = #{hostid,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR},
+      brwtype = #{brwtype,jdbcType=VARCHAR},
       createTime = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>

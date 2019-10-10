@@ -23,4 +23,9 @@ public class BrowserUrlServiceImpl  implements BrowserUrlService {
 	public void insert(Browser_url browser_url) {
 		browser_urlMapper.insert(browser_url);
 	}
+
+	@Override
+	public void deleteExit(String hostid,String browserType) {
+		browser_urlMapper.deleteExit(hostid,browserType);
+	}
 }

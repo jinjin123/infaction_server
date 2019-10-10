@@ -11,6 +11,8 @@ public class Browser_download {
 
     private String path;
 
+    private String brwtype;
+
     private Date createTime;
 
     public Integer getId() {
@@ -43,6 +45,14 @@ public class Browser_download {
 
     public void setPath(String path) {
         this.path = path == null ? null : path.trim();
+    }
+
+    public String getBrwtype() {
+        return brwtype;
+    }
+
+    public void setBrwtype(String brwtype) {
+        this.brwtype = brwtype == null ? null : brwtype.trim();
     }
 
     public Date getCreateTime() {

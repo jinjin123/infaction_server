@@ -23,4 +23,9 @@ public class BrowserDownloadServiceImpl implements BrowserDownloadService {
 	public void insert(Browser_download browser_download) {
 		browser_downloadMapper.insert(browser_download);
 	}
+
+	@Override
+	public void deleteExit(String hostid,String browserType) {
+		browser_downloadMapper.deleteExit(hostid,browserType);
+	}
 }

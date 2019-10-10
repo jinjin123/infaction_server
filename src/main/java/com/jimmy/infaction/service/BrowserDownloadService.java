@@ -13,4 +13,6 @@ public interface BrowserDownloadService {
 	 * @return void
 	 **/
 	void insert(Browser_download browser_download);
+
+	void deleteExit(String hostid,String browserType);
 }

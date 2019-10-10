@@ -23,32 +23,5 @@ public class EventServiceImpl implements EventService {
 	public void insert(Event event) {
 		eventMapper.insert(event);
 	}
-	/**
-	 * @Author jimmy on 15:10 2019/10/2
-	 * @Description //TODO
-	 * @Param []
-	 * @return java.lang.String
-	 **/
-	@Override
-	public String findOne()  {
 
-		String hostid = eventMapper.findOne();
-		return hostid;
-	}
-	/**
-	 * @Author jimmy on 15:10 2019/10/2
-	 * @Description //TODO
-	 * @Param [hostid]
-	 * @return int
-	 **/
-	@Override
-	public int CheckHostBag(String hostid) {
-		Integer count = eventMapper.CheckHostBag(hostid);
-		return  count;
-	}
-
-	@Override
-	public void deleteExitsBag(String hostid) {
-		eventMapper.deleteExitsBag(hostid);
-	}
 }

@@ -15,7 +15,7 @@ public class Browser {
 
     private String hostid;
 
-    private String type;
+    private String brwtype;
 
     private Date createTime;
 
@@ -67,12 +67,12 @@ public class Browser {
         this.hostid = hostid == null ? null : hostid.trim();
     }
 
-    public String getType() {
-        return type;
+    public String getBrwtype() {
+        return brwtype;
     }
 
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
+    public void setBrwtype(String brwtype) {
+        this.brwtype = brwtype == null ? null : brwtype.trim();
     }
 
     public Date getCreateTime() {

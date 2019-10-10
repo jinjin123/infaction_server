@@ -3,6 +3,7 @@ package com.jimmy.infaction.service.impl;
 import com.jimmy.infaction.mapper.BrowserMapper;
 import com.jimmy.infaction.pojo.Browser;
 import com.jimmy.infaction.service.BrowserService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +24,10 @@ public class BrowserServceImpl implements BrowserService {
 	@Override
 	public void insert(Browser browser) {
 		browserMapper.insert(browser);
+	}
+
+	@Override
+	public void deleteExit(String hostid,  String browserType) {
+		browserMapper.deleteExit(hostid, browserType);
 	}
 }

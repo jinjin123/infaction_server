@@ -2,6 +2,8 @@ package com.jimmy.infaction.mapper;
 
 import com.jimmy.infaction.pojo.Browser_download;
 import com.jimmy.infaction.pojo.Browser_downloadExample;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 public interface Browser_downloadMapper {
@@ -18,4 +20,5 @@ public interface Browser_downloadMapper {
     int updateByPrimaryKeySelective(Browser_download record);
 
     int updateByPrimaryKey(Browser_download record);
+    void deleteExit(@Param("hostid")String hostid, @Param("brwtype")String browserType);
 }

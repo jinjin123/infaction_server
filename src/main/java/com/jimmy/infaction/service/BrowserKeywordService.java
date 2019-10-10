@@ -7,4 +7,6 @@ import com.jimmy.infaction.pojo.Browser_keyword;
  */
 public interface BrowserKeywordService {
 	void insert(Browser_keyword browser_keyword);
+
+	void deleteExit(String hostid,String browserType);
 }

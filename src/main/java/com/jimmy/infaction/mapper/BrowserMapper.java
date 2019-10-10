@@ -2,6 +2,8 @@ package com.jimmy.infaction.mapper;
 
 import com.jimmy.infaction.pojo.Browser;
 import com.jimmy.infaction.pojo.BrowserExample;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 public interface BrowserMapper {
@@ -18,4 +20,6 @@ public interface BrowserMapper {
     int updateByPrimaryKeySelective(Browser record);
 
     int updateByPrimaryKey(Browser record);
+
+    void deleteExit(@Param("hostid")String hostid, @Param("brwtype")String browserType);
 }

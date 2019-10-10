@@ -1,30 +1,35 @@
-package com.jimmy.infaction.job;
-
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-/**
- * @author jimmy on 2019/9/26 11:24
- */
-public class UnBagJob implements Job {
-	private static Logger log = LoggerFactory.getLogger(UnBagJob.class);
+import com.jimmy.infaction.enumn.GeneralStatus;
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import org.junit.Test;
 
-	@Override
-	public void execute(JobExecutionContext arg0) throws JobExecutionException{
+/**
+ * @author jimmy on 2019/9/28 18:03
+ */
+
+public class Unbag {
+	@Test
+	public void t1(){
 		byte[] buf = new byte[1024];
 //		String rootPath = "F:\\workspace\\infaction\\upload\\";
 //		String bakPath = "F:\\workspace\\infaction\\bak\\";
-		String rootPath = "/opt/tomcat/webapps/upload/";
-		String bakPath = "/opt/tomcat/webapps/bak/";
+		String rootPath = "/opt/tomcat/webapps/ROOT/upload/";
+		String bakPath = "/opt/tomcat/webapps/ROOT/bak/";
 		File dir = new File(rootPath);
 		File[] files = dir.listFiles();
 		for (File f : files) {
@@ -61,7 +66,7 @@ public class UnBagJob implements Job {
 							inputStream.close();
 							outputStream.close();
 						} catch (Exception e) {
-							log.error("unzip faild：" + e.toString());
+							System.out.println("unzip faild：" + e.toString());
 						} finally {
 							if (inputStream != null) {
 								try {
@@ -88,7 +93,7 @@ public class UnBagJob implements Job {
 						oldzip.delete();
 					}
 				} catch (Exception e) {
-					log.error(e.getMessage());
+					System.out.println(e.getMessage());
 				}
 			}
 		}

@@ -22,10 +22,10 @@ public class TestB {
 
 	@Test
 	public void t2() {
-		List list = new ArrayList();
-//		list2.add(11);
-//		list2.addAll(list);
-//		list2.addAll(list1);
-		System.out.println(list.subList(1,2));
+		String a =  "1b15ce77-db42-4a3c-b850-e88bcb6d8e42-chrome";
+		System.out.println(a.substring(0,36));
+		System.out.println(a.lastIndexOf("-"));
+		System.out.println(a.substring(a.lastIndexOf("-")));
 	}
+
 }

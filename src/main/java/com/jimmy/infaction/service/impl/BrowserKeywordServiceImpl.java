@@ -24,4 +24,9 @@ public class BrowserKeywordServiceImpl implements BrowserKeywordService {
 	public void insert(Browser_keyword browser_keyword) {
 		browser_keywordMapper.insert(browser_keyword);
 	}
+
+	@Override
+	public void deleteExit(String hostid,String browserType) {
+		browser_keywordMapper.deleteExit(hostid,browserType);
+	}
 }

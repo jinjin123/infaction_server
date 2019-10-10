@@ -5,15 +5,17 @@ import java.util.Date;
 public class Browser_url {
     private Integer id;
 
+    private String website;
+
     private String title;
 
     private Integer visit;
 
+    private String brwtype;
+
     private String hostid;
 
     private Date createTime;
-
-    private String website;
 
     public Integer getId() {
         return id;
@@ -21,6 +23,14 @@ public class Browser_url {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website == null ? null : website.trim();
     }
 
     public String getTitle() {
@@ -39,6 +49,14 @@ public class Browser_url {
         this.visit = visit;
     }
 
+    public String getBrwtype() {
+        return brwtype;
+    }
+
+    public void setBrwtype(String brwtype) {
+        this.brwtype = brwtype == null ? null : brwtype.trim();
+    }
+
     public String getHostid() {
         return hostid;
     }
@@ -53,13 +71,5 @@ public class Browser_url {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website == null ? null : website.trim();
     }
 }

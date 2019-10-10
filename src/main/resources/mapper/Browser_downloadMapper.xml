@@ -6,6 +6,7 @@
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="hostid" jdbcType="VARCHAR" property="hostid" />
     <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="brwtype" jdbcType="VARCHAR" property="brwtype" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -38,7 +39,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, url, hostid, path, createTime
+    id, url, hostid, path, brwtype, createTime
   </sql>
   <select id="selectByExample" parameterType="com.jimmy.infaction.pojo.Browser_downloadExample" resultMap="BaseResultMap">
     select
@@ -56,7 +57,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
+    select 
     <include refid="Base_Column_List" />
     from browser_download
     where id = #{id,jdbcType=INTEGER}
@@ -65,12 +66,16 @@
     delete from browser_download
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteExit" parameterType="string" >
+      delete from browser_download where hostid = #{hostid,jdbcType=VARCHAR} and brwtype = #{brwtype,jdbcType=VARCHAR}
+   </delete>
   <sql id="Default_Cloumns">
     <trim suffixOverrides=",">
       <if test="id != null">id,</if>
       <if test="url != null">url,</if>
       <if test="hostid != null">hostid,</if>
       <if test="path != null">path,</if>
+      <if test="brwtype != null">brwtype,</if>
       <if test="createTime != null">createTime</if>
     </trim>
   </sql>
@@ -80,6 +85,7 @@
       <if test="url != null">#{url},</if>
       <if test="hostid != null">#{hostid},</if>
       <if test="path != null">#{path},</if>
+      <if test="brwtype != null">#{brwtype},</if>
       <if test="createTime != null">#{createTime}</if>
     </trim>
   </sql>
@@ -99,6 +105,9 @@
       <if test="path != null">
         path,
       </if>
+      <if test="brwtype != null">
+        brwtype,
+      </if>
       <if test="createTime != null">
         createTime,
       </if>
@@ -112,6 +121,9 @@
       </if>
       <if test="path != null">
         #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="brwtype != null">
+        #{brwtype,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -130,6 +142,9 @@
       <if test="path != null">
         path = #{path,jdbcType=VARCHAR},
       </if>
+      <if test="brwtype != null">
+        brwtype = #{brwtype,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null">
         createTime = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -141,6 +156,7 @@
     set url = #{url,jdbcType=VARCHAR},
       hostid = #{hostid,jdbcType=VARCHAR},
       path = #{path,jdbcType=VARCHAR},
+      brwtype = #{brwtype,jdbcType=VARCHAR},
       createTime = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
