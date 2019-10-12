@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `browser` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '唯一索引id',
   `origin_url` varchar(2000) NOT NULL COMMENT '浏览网址',
   `action_url` varchar(2000)  NOT NULL COMMENT '浏览网址',
-  `user`  varchar(30)  not null COMMENT '账号' ,
+  `user`  varchar(50)  not null COMMENT '账号' ,
   `password` varchar(50)  not null COMMENT '密码' ,
   `hostid` varchar(50) not null COMMENT '主机ID' ,
   `brwtype` varchar(30) not null COMMENT  '浏览器类型',

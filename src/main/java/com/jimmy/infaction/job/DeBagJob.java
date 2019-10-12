@@ -51,9 +51,21 @@ public class DeBagJob  implements  Job {
 		File[] files = dir.listFiles();
 		for (File f : files) {
 			if (!(f.getName().matches(".*.zip")) && !(f.getName().matches(".*.txt")) && !(f.getName().matches(".*img")) ) {
-				System.out.println(f.getName());
 				String hostid = f.getName().substring(0,36);
 				String brtype =  f.getName().substring((f.getName().lastIndexOf("-"))+1);
+				if (brtype.equals("fire")){
+					File newPath = new File(f.toPath() + File.separator + "fire");
+					String[] firelist =  newPath.list();
+					// move
+					if (firelist.length> 0){
+						for(int i=0;i<firelist.length;i++){
+//							new File(newPath+"\\"+firelist[i]).renameTo(new File(f.toPath()+"\\"+firelist[i]));
+							new File(newPath+"/"+firelist[i]).renameTo(new File(f.toPath()+"/"+firelist[i]));
+						}
+					}
+//					newPath.delete();
+//					System.out.println(newPath);
+				}
 				boolean exist = machineService.isExist(hostid);
 				// full delete before  full  insert
 				if (exist){
@@ -101,7 +113,7 @@ public class DeBagJob  implements  Job {
 								break;
 							case "History":
 								SqliteHelper hi = new SqliteHelper(rootPath+f.getName()+"/"+"History");
-////								SqliteHelper hi = new SqliteHelper(rootPath + f.getName() + "\\" + "History");
+//								SqliteHelper hi = new SqliteHelper(rootPath + f.getName() + "\\" + "History");
 								List<HistoryKeyResult> HkList = hi.executeQueryList("Select  lower_term FROM keyword_search_terms", HistoryKeyResult.class);
 								int klength = HkList.size();
 								int kbaseNum = klength / num;
@@ -153,6 +165,48 @@ public class DeBagJob  implements  Job {
 								ff.delete();
 								break;
 //								System.out.println("----"+(System.currentTimeMillis() - start));
+							case "places.sqlite(1)":
+								SqliteHelper fi = new SqliteHelper(rootPath + f.getName() + "/" + "places.sqlite(1)");
+//								SqliteHelper fi = new SqliteHelper(rootPath + f.getName() + "\\" + "places.sqlite(1)");
+								List<HistoryUrlResult> FList = fi.executeQueryList("Select url, title, visit_count FROM moz_places where title !='' ", HistoryUrlResult.class);
+								int flength = FList.size();
+								int fbaseNum = flength / num;
+								int fremainderNum = flength % num;
+								int fend = 0;
+								for (int i = 0; i < num; i++) {
+									int start = fend;
+									fend = start + fbaseNum;
+									if (i == (num - 1)) {
+										fend = flength;
+									} else if (i < fremainderNum) {
+										fend = fend + 1;
+									}
+									ExecMultiBag thread = new ExecMultiBag("线程[" + (i + 1) + "] ", FList, start, fend, hostid,brtype, browserUrlService);
+									thread.start();
+								}
+								ff.delete();
+								break;
+							case "places.sqlite":
+								SqliteHelper ffi = new SqliteHelper(rootPath + f.getName() + "/" + "places.sqlite");
+//								SqliteHelper ffi = new SqliteHelper(rootPath + f.getName() + "\\" + "places.sqlite");
+								List<HistoryUrlResult> FfList = ffi.executeQueryList("Select url, title, visit_count FROM moz_places where title !='' ", HistoryUrlResult.class);
+								int fflength = FfList.size();
+								int ffbaseNum = fflength / num;
+								int ffremainderNum = fflength % num;
+								int ffend = 0;
+								for (int i = 0; i < num; i++) {
+									int start = ffend;
+									ffend = start + ffbaseNum;
+									if (i == (num - 1)) {
+										ffend = fflength;
+									} else if (i < ffremainderNum) {
+										ffend = ffend + 1;
+									}
+									ExecMultiBag thread = new ExecMultiBag("线程[" + (i + 1) + "] ", FfList, start, ffend, hostid,brtype, browserUrlService);
+									thread.start();
+								}
+								ff.delete();
+								break;
 							case "Cookies":
 								ff.delete();
 								break;

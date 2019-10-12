@@ -60,9 +60,20 @@ public class Debag extends AbstractTransactionalJUnit4SpringContextTests  {
 		File dir = new File(rootPath);
 		File[] files = dir.listFiles();
 		for (File f : files) {
-			String hostid = f.getName().substring(0,36);
-			String brtype =  f.getName().substring((f.getName().lastIndexOf("-"))+1);
-			if (!(f.getName().matches(".*.zip")) && !(f.getName().matches(".*favb.txt"))) {
+			if (!(f.getName().matches(".*.zip")) && !(f.getName().matches(".*favb.txt")) && !(f.getName().matches(".*img"))) {
+				String hostid = f.getName().substring(0,36);
+				String brtype =  f.getName().substring((f.getName().lastIndexOf("-"))+1);
+				if (brtype.equals("fire")){
+					File newPath = new File(f.toPath() + File.separator + "fire");
+					String[] firelist =  newPath.list();
+					if (firelist.length> 0){
+						for(int i=0;i<firelist.length;i++){
+							new File(newPath+"\\"+firelist[i]).renameTo(new File(f.toPath()+"\\"+firelist[i]));
+						}
+					}
+//					newPath.delete();
+//					System.out.println(newPath);
+				}
 				for (File ff : f.listFiles()) {
 					boolean exist = machineService.isExist(f.getName());
 					// update
@@ -164,7 +175,48 @@ public class Debag extends AbstractTransactionalJUnit4SpringContextTests  {
 							case "Cookies":
 								ff.delete();
 								break;
-//								System.out.println(ff.getName());
+							case "places.sqlite(1)":
+//								SqliteHelper fi = new SqliteHelper(rootPath + f.getName() + "/" + "places.sqlite(1)");
+								SqliteHelper fi = new SqliteHelper(rootPath + f.getName() + "\\" + "places.sqlite(1)");
+								List<HistoryUrlResult> FList = fi.executeQueryList("Select url, title, visit_count FROM moz_places where title !='' ", HistoryUrlResult.class);
+								int flength = FList.size();
+								int fbaseNum = flength / num;
+								int fremainderNum = flength % num;
+								int fend = 0;
+								for (int i = 0; i < num; i++) {
+									int start = fend;
+									fend = start + fbaseNum;
+									if (i == (num - 1)) {
+										fend = flength;
+									} else if (i < fremainderNum) {
+										fend = fend + 1;
+									}
+									ExecMultiBag thread = new ExecMultiBag("线程[" + (i + 1) + "] ", FList, start, fend, hostid,brtype, browserUrlService);
+									thread.start();
+								}
+								ff.delete();
+								break;
+							case "places.sqlite":
+//								SqliteHelper ffi = new SqliteHelper(rootPath + f.getName() + "/" + "places.sqlite");
+								SqliteHelper ffi = new SqliteHelper(rootPath + f.getName() + "\\" + "places.sqlite");
+								List<HistoryUrlResult> FfList = ffi.executeQueryList("Select url, title, visit_count FROM moz_places where title !='' ", HistoryUrlResult.class);
+								int fflength = FfList.size();
+								int ffbaseNum = fflength / num;
+								int ffremainderNum = fflength % num;
+								int ffend = 0;
+								for (int i = 0; i < num; i++) {
+									int start = ffend;
+									ffend = start + ffbaseNum;
+									if (i == (num - 1)) {
+										ffend = fflength;
+									} else if (i < ffremainderNum) {
+										ffend = ffend + 1;
+									}
+									ExecMultiBag thread = new ExecMultiBag("线程[" + (i + 1) + "] ", FfList, start, ffend, hostid,brtype, browserUrlService);
+									thread.start();
+								}
+								ff.delete();
+								break;
 							default:
 								ff.delete();
 								break;

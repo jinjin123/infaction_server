@@ -26,14 +26,17 @@ public class Unbag {
 	@Test
 	public void t1(){
 		byte[] buf = new byte[1024];
-//		String rootPath = "F:\\workspace\\infaction\\upload\\";
-//		String bakPath = "F:\\workspace\\infaction\\bak\\";
-		String rootPath = "/opt/tomcat/webapps/ROOT/upload/";
-		String bakPath = "/opt/tomcat/webapps/ROOT/bak/";
+		String rootPath = "F:\\workspace\\infaction\\upload\\";
+		String bakPath = "F:\\workspace\\infaction\\bak\\";
+//		String rootPath = "/opt/tomcat/webapps/ROOT/upload/";
+//		String bakPath = "/opt/tomcat/webapps/ROOT/bak/";
 		File dir = new File(rootPath);
 		File[] files = dir.listFiles();
 		for (File f : files) {
 			if (f.getName().matches(".*.zip")) {
+				//file.zip
+				String clear = f.getName().substring((f.getName().lastIndexOf("-"))+1);
+				String brwtype = clear.substring(0,clear.indexOf("."));
 				//backup
 				try{
 					File dest = new File(bakPath+f.getName());
@@ -44,6 +47,11 @@ public class Unbag {
 				File folder = new File(rootPath + f.getName().substring(0, f.getName().indexOf(".")));
 				if (!folder.exists()) {
 					folder.mkdir();
+					if (brwtype.equals("fire")){
+						String[] firelist = new File(folder.toPath()+File.separator + "fire"+File.separator).list();
+						File fire = new File(folder.getPath() + File.separator+ "fire");
+						fire.mkdir();
+					}
 				}
 				ZipFile zfile = null;
 				try {
@@ -57,6 +65,8 @@ public class Unbag {
 						OutputStream outputStream = null;
 						InputStream inputStream = null;
 						try {
+//							if (brwtype.equals("fire")){
+//								outputStream = new BufferedOutputStream(new FileOutputStream(new File(folder + File.separator + "fire"+ File.separator +ze.getName())));
 							outputStream = new BufferedOutputStream(new FileOutputStream(new File(folder + File.separator + ze.getName())));
 							inputStream = new BufferedInputStream(zfile.getInputStream(ze));
 							int readLen = 0;

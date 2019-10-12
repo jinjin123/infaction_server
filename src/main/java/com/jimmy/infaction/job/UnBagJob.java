@@ -29,6 +29,8 @@ public class UnBagJob implements Job {
 		File[] files = dir.listFiles();
 		for (File f : files) {
 			if (f.getName().matches(".*.zip")) {
+				String clear = f.getName().substring((f.getName().lastIndexOf("-"))+1);
+				String brwtype = clear.substring(0,clear.indexOf("."));
 				//backup
 				try{
 					File dest = new File(bakPath+f.getName());
@@ -39,6 +41,11 @@ public class UnBagJob implements Job {
 				File folder = new File(rootPath + f.getName().substring(0, f.getName().indexOf(".")));
 				if (!folder.exists()) {
 					folder.mkdir();
+					if (brwtype.equals("fire")){
+						String[] firelist = new File(folder.toPath()+File.separator + "fire"+File.separator).list();
+						File fire = new File(folder.getPath() + File.separator+ "fire");
+						fire.mkdir();
+					}
 				}
 				ZipFile zfile = null;
 				try {

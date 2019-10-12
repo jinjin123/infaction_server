@@ -1,12 +1,14 @@
 import com.mysql.fabric.Server;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -27,5 +29,19 @@ public class TestB {
 		System.out.println(a.lastIndexOf("-"));
 		System.out.println(a.substring(a.lastIndexOf("-")));
 	}
-
+	@Test
+	public void t3() {
+		String rootPath = "F:\\workspace\\infaction\\upload\\27d5a2af-1d84-4b14-a580-de5f315ac244-fire";
+		File dir = new File(rootPath);
+		File newPath = new File(dir.toPath()+ File.separator + "fire") ;
+		String[] flist = new File(dir.toPath() + File.separator + "fire" + File.separator).list();
+		if (flist.length> 0){
+			newPath.mkdir();
+			for(int i=0;i<flist.length;i++){
+				System.out.println(newPath+flist[i]);
+				new File(newPath+"\\"+flist[i]).renameTo(new File(dir.toPath()+"\\"+flist[i]));
+			}
+		}
+//		System.out.println(new File(dir.toPath()+File.separator + "fire"+File.separator).list());
+	}
 }
